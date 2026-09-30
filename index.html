@@ -154,6 +154,6 @@ function backup(){$("#app").innerHTML='<div class="card"><h2>Copia / Restaurar</
 function download(){let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:"application/json"}));a.download="antonio-cars-service-respaldo.json";a.click()}
 function restore(e){let r=new FileReader;r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.ots)throw 0;db=x;save();home();toast("Respaldo restaurado")}catch{toast("Archivo no válido")}};r.readAsText(e.target.files[0])}
 go("home");
-if("serviceWorker"in navigator)navigator.serviceWorker.register("./sw.js?v=25",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{});
+if("serviceWorker"in navigator)navigator.serviceWorker.register("./sw.js?v=26",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{});
 </script>
 </body></html>
