@@ -83,15 +83,27 @@ function iconCheck(x,y){ctx.strokeStyle=RED;ctx.lineWidth=3;ctx.beginPath();ctx.
 function iconWhatsApp(x,y){ctx.strokeStyle="#35d65b";ctx.lineWidth=6;ctx.beginPath();ctx.arc(x,y,28,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.moveTo(x-8,y+8);ctx.quadraticCurveTo(x-18,y-3,x-7,y-13);ctx.quadraticCurveTo(x+5,y-22,x+15,y-11);ctx.quadraticCurveTo(x+22,y-3,x+15,y+8);ctx.quadraticCurveTo(x+6,y+18,x-8,y+8);ctx.stroke();ctx.beginPath();ctx.moveTo(x-11,y+16);ctx.lineTo(x-20,y+25);ctx.lineTo(x-4,y+19);ctx.stroke()}
 const logo=new Image();logo.src="./logo.jpg?v=14";await new Promise(r=>{logo.onload=r;logo.onerror=r});const hasLogo=logo.complete&&logo.naturalWidth;
 const headerH=276;
-ctx.fillStyle="#eef1f3";ctx.fillRect(0,0,W,headerH);
-ctx.fillStyle="#10161b";ctx.fillRect(0,0,405,headerH);
-ctx.fillStyle="#0b1015";ctx.beginPath();ctx.moveTo(405,0);ctx.lineTo(470,0);ctx.lineTo(414,headerH);ctx.lineTo(350,headerH);ctx.closePath();ctx.fill();
-ctx.fillStyle=RED;ctx.fillRect(0,headerH-3,W,3);
-if(hasLogo){const sc=Math.min(385/logo.naturalWidth,190/logo.naturalHeight);ctx.drawImage(logo,28,25,logo.naturalWidth*sc,logo.naturalHeight*sc)}
-ctx.save();ctx.translate(760,112);ctx.strokeStyle=RED;ctx.lineWidth=4;ctx.fillStyle="#161c21";ctx.beginPath();ctx.moveTo(-250,70);ctx.quadraticCurveTo(-218,14,-128,-7);ctx.lineTo(-58,-57);ctx.quadraticCurveTo(10,-73,88,-38);ctx.lineTo(158,7);ctx.quadraticCurveTo(220,19,248,70);ctx.lineTo(232,88);ctx.lineTo(-232,88);ctx.closePath();ctx.fill();ctx.stroke();ctx.strokeStyle="#aab2b9";ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(-105,-2);ctx.lineTo(-53,-40);ctx.lineTo(53,-38);ctx.lineTo(107,1);ctx.closePath();ctx.stroke();for(const x of[-160,160]){ctx.strokeStyle=RED;ctx.lineWidth=6;ctx.beginPath();ctx.arc(x,78,22,0,Math.PI*2);ctx.stroke()}ctx.restore();
-txt("Tu vehículo",760,160,27,"700","#fff","center");txt("en buenas manos",760,194,30,"700",RED,"center");
+ctx.fillStyle="#f4f6f7";ctx.fillRect(0,0,W,headerH);
+const car=new Image();car.crossOrigin="anonymous";car.src="https://images.unsplash.com/photo-1767681092416-bccf9410bda4?auto=format&fit=crop&fm=jpg&q=80&w=1400";
+await new Promise(r=>{car.onload=r;car.onerror=r});
+ctx.save();ctx.beginPath();ctx.rect(0,0,W,230);ctx.clip();
+ctx.fillStyle="#f4f6f7";ctx.fillRect(0,0,W,230);
+ctx.fillStyle="#ffffff";ctx.fillRect(0,0,455,230);
+if(car.complete&&car.naturalWidth){
+  const sc=Math.max(554/car.naturalWidth,230/car.naturalHeight);
+  const cw=car.naturalWidth*sc,ch=car.naturalHeight*sc;
+  ctx.drawImage(car,470+(554-cw)/2,0+(230-ch)/2,cw,ch);
+  const g=ctx.createLinearGradient(430,0,560,0);g.addColorStop(0,"#f4f6f7");g.addColorStop(1,"rgba(244,246,247,0)");
+  ctx.fillStyle=g;ctx.fillRect(405,0,170,230);
+}
+ctx.restore();
+ctx.fillStyle=RED;ctx.fillRect(448,0,7,230);
+if(hasLogo){const sc=Math.min(390/logo.naturalWidth,176/logo.naturalHeight);ctx.drawImage(logo,28,20,logo.naturalWidth*sc,logo.naturalHeight*sc)}
+txt("MECÁNICA GENERAL",28,214,14,"700",INK);line(168,202,168,220,1,RED);txt("DIAGNÓSTICO",193,214,14,"700",INK);line(307,202,307,220,1,RED);txt("MANTENCIÓN",332,214,14,"700",INK);
+ctx.fillStyle="rgba(10,14,18,.78)";ctx.fillRect(690,156,334,74);
+txt("Tu vehículo",714,184,25,"700","#fff");txt("en buenas manos",714,215,27,"700",RED);
 ctx.fillStyle=DARK;ctx.fillRect(0,230,W,46);
-txt("MECÁNICA GENERAL",105,259,15,"700","#fff","center");line(282,242,282,266,1,RED);txt("DIAGNÓSTICO",405,259,15,"700","#fff","center");line(527,242,527,266,1,RED);txt("MANTENCIÓN",645,259,15,"700","#fff","center");
+txt("MECÁNICA GENERAL",145,259,15,"700","#fff","center");line(290,242,290,266,1,RED);txt("DIAGNÓSTICO",510,259,15,"700","#fff","center");line(655,242,655,266,1,RED);txt("MANTENCIÓN",830,259,15,"700","#fff","center");
 let y=292;const title=o.mode=="presupuesto"?"PRESUPUESTO":"ORDEN DE TRABAJO";
 panel(28,y,968,86,12,"#fff");ctx.fillStyle=RED;ctx.beginPath();ctx.roundRect(42,y+13,58,60,9);ctx.fill();iconDoc(71,y+43);txt(title,126,y+37,27,"800",INK);txt("N° "+(o.no||""),126,y+67,20,"700",RED);line(605,y+18,605,y+68,1,LINE);txt("Fecha",630,y+31,13,"700",MUTED);txt(fmt(o.created||new Date()).split(",")[0],630,y+57,17,"600",INK);line(775,y+18,775,y+68,1,LINE);txt("Estado",800,y+31,13,"700",MUTED);txt(o.status||"Pendiente",800,y+57,16,"700",RED);y+=98;
 panel(28,y,968,154,12);iconUser(76,y+42);txt("DATOS DEL CLIENTE",118,y+37,20,"800",INK);line(512,y+18,512,y+136,1,RED);iconCar(575,y+45);txt("DATOS DEL VEHÍCULO",622,y+37,20,"800",INK);
