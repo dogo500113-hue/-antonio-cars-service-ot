@@ -22,8 +22,8 @@ main{max-width:1050px;margin:auto;padding:14px}.nav{display:flex;gap:7px;overflo
 </style>
 </head>
 <body>
-<div style="position:fixed;right:8px;bottom:8px;z-index:9998;background:#111;color:#e21b2d;border:1px solid #e21b2d;border-radius:8px;padding:5px 8px;font:700 11px system-ui">ACS OT · DISEÑO PROFESIONAL v10</div>
-<header class="top"><div class="brand"><img class="logoimg" src="./logo.jpg?v=13" alt="Antonio Cars Service"><div><b>ANTONIO CARS SERVICE</b><div class="muted">Órdenes de Trabajo · Chile</div></div></div></header>
+<div style="position:fixed;right:8px;bottom:8px;z-index:9998;background:#111;color:#e21b2d;border:1px solid #e21b2d;border-radius:8px;padding:5px 8px;font:700 11px system-ui">ACS OT · DISEÑO PROFESIONAL v11</div>
+<header class="top"><div class="brand"><img class="logoimg" src="./logo.jpg?v=16" alt="Antonio Cars Service"><div><b>ANTONIO CARS SERVICE</b><div class="muted">Órdenes de Trabajo · Chile</div></div></div></header>
 <main><nav class="nav np"><button data-t="home">Inicio</button><button data-t="new">Nueva OT</button><button data-t="budget">Nuevo presupuesto</button><button data-t="open">OT abiertas</button><button data-t="history">Historial</button><button data-t="clients">Clientes</button><button data-t="backup">Copia / Restaurar</button></nav><div id="app"></div></main>
 <div id="toast" class="hidden" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;padding:11px 15px;border-radius:9px;z-index:99999"></div>
 <script>
@@ -80,8 +80,21 @@ function iconCar(x,y){ctx.strokeStyle=INK;ctx.lineWidth=4;ctx.beginPath();ctx.ro
 function iconWrench(x,y){ctx.strokeStyle=RED;ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(x-20,y+18);ctx.lineTo(x+12,y-14);ctx.stroke();ctx.beginPath();ctx.arc(x+17,y-19,10,.35,2.4);ctx.stroke()}
 function iconDoc(x,y){ctx.strokeStyle=RED;ctx.lineWidth=3;ctx.strokeRect(x-16,y-21,32,42);line(x-8,y-9,x+9,y-9,2,RED);line(x-8,y,x+9,y,2,RED);line(x-8,y+9,x+5,y+9,2,RED)}
 function iconCheck(x,y){ctx.strokeStyle=RED;ctx.lineWidth=3;ctx.beginPath();ctx.arc(x,y,25,0,Math.PI*2);ctx.stroke();line(x-9,y,x-2,y+8,3,"#fff");line(x-2,y+8,x+11,y-9,3,"#fff")}
-function iconWhatsApp(x,y){ctx.strokeStyle="#35d65b";ctx.lineWidth=6;ctx.beginPath();ctx.arc(x,y,28,0,Math.PI*2);ctx.stroke();ctx.beginPath();ctx.moveTo(x-8,y+8);ctx.quadraticCurveTo(x-18,y-3,x-7,y-13);ctx.quadraticCurveTo(x+5,y-22,x+15,y-11);ctx.quadraticCurveTo(x+22,y-3,x+15,y+8);ctx.quadraticCurveTo(x+6,y+18,x-8,y+8);ctx.stroke();ctx.beginPath();ctx.moveTo(x-11,y+16);ctx.lineTo(x-20,y+25);ctx.lineTo(x-4,y+19);ctx.stroke()}
-const logo=new Image();logo.src="./logo.jpg?v=14";await new Promise(r=>{logo.onload=r;logo.onerror=r});const hasLogo=logo.complete&&logo.naturalWidth;
+function iconWhatsApp(x,y){
+ctx.save();
+ctx.fillStyle="#25D366";ctx.beginPath();ctx.arc(x,y,31,0,Math.PI*2);ctx.fill();
+ctx.strokeStyle="#fff";ctx.lineWidth=3;ctx.beginPath();ctx.arc(x,y,25,0,Math.PI*2);ctx.stroke();
+ctx.fillStyle="#fff";ctx.beginPath();
+ctx.moveTo(x-8,y-13);ctx.quadraticCurveTo(x-15,y-5,x-9,y+5);
+ctx.quadraticCurveTo(x-3,y+15,x+9,y+14);
+ctx.quadraticCurveTo(x+15,y+12,x+17,y+6);
+ctx.lineTo(x+8,y+1);ctx.quadraticCurveTo(x+4,y+7,x+1,y+5);
+ctx.lineTo(x-5,y-2);ctx.quadraticCurveTo(x-1,y-6,x-2,y-10);
+ctx.closePath();ctx.fill();
+ctx.beginPath();ctx.moveTo(x-11,y+13);ctx.lineTo(x-19,y+21);ctx.lineTo(x-7,y+17);ctx.fill();
+ctx.restore();
+}
+const logo=new Image();logo.src="./logo.jpg?v=16";await new Promise(r=>{logo.onload=r;logo.onerror=r});const hasLogo=logo.complete&&logo.naturalWidth;
 const headerH=276;
 ctx.fillStyle="#f4f6f7";ctx.fillRect(0,0,W,headerH);
 const car=new Image();car.crossOrigin="anonymous";car.src="https://images.unsplash.com/photo-1767681092416-bccf9410bda4?auto=format&fit=crop&fm=jpg&q=80&w=1400";
@@ -109,12 +122,12 @@ panel(28,y,968,86,12,"#fff");ctx.fillStyle=RED;ctx.beginPath();ctx.roundRect(42,
 panel(28,y,968,154,12);iconUser(76,y+42);txt("DATOS DEL CLIENTE",118,y+37,20,"800",INK);line(512,y+18,512,y+136,1,RED);iconCar(575,y+45);txt("DATOS DEL VEHÍCULO",622,y+37,20,"800",INK);
 const clientRows=[["Nombre:",o.client?.name||"—"],["Teléfono:",o.client?.phone||"—"],["Email:",o.client?.email||"—"],["RUT:",o.client?.rut||"—"]];clientRows.forEach((r,i)=>{txt(r[0],118,y+70+i*25,14,"700",INK);txt(r[1],207,y+70+i*25,14,"500",MUTED)});
 const vehicleRows=[["Patente:",o.plate||"—"],["Marca:",o.vehicle?.make||"—"],["Modelo:",o.vehicle?.model||"—"],["Año:",o.vehicle?.year||"—"]];vehicleRows.forEach((r,i)=>{txt(r[0],622,y+70+i*25,14,"700",INK);txt(r[1],705,y+70+i*25,14,"500",MUTED)});txt("Kilometraje:",820,y+145,14,"700",INK);txt((o.vehicle?.km||"—")+" km",910,y+145,14,"500",MUTED);y+=166;
-function info(title,value,ico){const lines=wrap(value||"No informado",860);const h=Math.max(76,47+Math.min(3,lines.length)*22);panel(28,y,968,h,12);ico(76,y+39);txt(title,118,y+32,19,"800",INK);lines.slice(0,3).forEach((s,i)=>txt(s,118,y+58+i*22,14,"500",MUTED));y+=h+10}
+function info(title,value,ico){const lines=wrap(value||"No informado",860);const h=Math.max(74,44+Math.min(3,lines.length)*22);panel(28,y,968,h,10);ctx.fillStyle=RED;ctx.fillRect(48,y+18,3,28);txt(title,66,y+38,16,"700",INK);lines.slice(0,3).forEach((s,i)=>txt(s,66,y+61+i*22,14,"500",MUTED));y+=h+10}
 info("MOTIVO DE INGRESO",o.reason,iconWrench);if(o.diagnosis)info("DIAGNÓSTICO / TRABAJO",o.diagnosis,iconWrench);
-function table(title,arr,isLabor){panel(28,y,968,50,10,"#fff");txt(title,78,y+32,20,"800",INK);y+=50;ctx.fillStyle=DARK;ctx.fillRect(28,y,968,38);txt("Descripción",48,y+25,13,"700","#fff");txt(isLabor?"Cantidad (hrs)":"Cantidad",545,y+25,13,"700","#fff","center");txt("Precio Unitario",735,y+25,13,"700","#fff","center");txt("Subtotal",974,y+25,13,"700","#fff","right");y+=38;let sum=0;arr.forEach((it,i)=>{const qty=+it.qty||1,price=+it.price||0,sub=qty*price;sum+=sub;ctx.fillStyle=i%2?"#fff":"#f7f8f9";ctx.fillRect(28,y,968,rowH);line(28,y+rowH,996,y+rowH,1,LINE);const d=String(it.desc||"Sin descripción");txt(d.length>60?d.slice(0,60)+"…":d,48,y+28,14,"500",INK);txt(isLabor?Number(qty).toFixed(1).replace(".",","):String(qty),545,y+28,14,"600",INK,"center");txt(moneyLocal(price),735,y+28,14,"600",INK,"center");txt(moneyLocal(sub),974,y+28,14,"700",INK,"right");y+=rowH});ctx.fillStyle=RED;ctx.fillRect(690,y,306,38);txt("Total "+(isLabor?"Mano de Obra":"Repuestos"),708,y+25,13,"700","#fff");txt(moneyLocal(sum),974,y+25,16,"800","#fff","right");y+=48;return sum}
+function table(title,arr,isLabor){panel(28,y,968,44,10,"#fff");ctx.fillStyle=RED;ctx.fillRect(48,y+12,3,22);txt(title,66,y+30,16,"700",INK);y+=44;ctx.fillStyle=DARK;ctx.fillRect(28,y,968,38);txt("Descripción",48,y+25,13,"700","#fff");txt(isLabor?"Cantidad (hrs)":"Cantidad",545,y+25,13,"700","#fff","center");txt("Precio Unitario",735,y+25,13,"700","#fff","center");txt("Subtotal",974,y+25,13,"700","#fff","right");y+=38;let sum=0;arr.forEach((it,i)=>{const qty=+it.qty||1,price=+it.price||0,sub=qty*price;sum+=sub;ctx.fillStyle=i%2?"#fff":"#f7f8f9";ctx.fillRect(28,y,968,rowH);line(28,y+rowH,996,y+rowH,1,LINE);const d=String(it.desc||"Sin descripción");txt(d.length>60?d.slice(0,60)+"…":d,48,y+28,14,"500",INK);txt(isLabor?Number(qty).toFixed(1).replace(".",","):String(qty),545,y+28,14,"600",INK,"center");txt(moneyLocal(price),735,y+28,14,"600",INK,"center");txt(moneyLocal(sub),974,y+28,14,"700",INK,"right");y+=rowH});ctx.fillStyle=RED;ctx.fillRect(690,y,306,38);txt("Total "+(isLabor?"Mano de Obra":"Repuestos"),708,y+25,13,"700","#fff");txt(moneyLocal(sum),974,y+25,16,"800","#fff","right");y+=48;return sum}
 const sp=table("REPUESTOS",parts,false),sl=table("MANO DE OBRA",labor,true),total=sp+sl;
-panel(28,y,468,118,12);txt("RESUMEN",78,y+31,19,"800",INK);line(48,y+43,476,y+43,1,LINE);txt("Repuestos",48,y+69,14,"500",MUTED);txt(moneyLocal(sp),476,y+69,14,"700",INK,"right");txt("Mano de obra",48,y+92,14,"500",MUTED);txt(moneyLocal(sl),476,y+92,14,"700",INK,"right");ctx.fillStyle=RED;ctx.fillRect(28,y+96,468,42);txt(title=="PRESUPUESTO"?"TOTAL PRESUPUESTO":"TOTAL",48,y+123,16,"800","#fff");txt(moneyLocal(total),476,y+123,18,"800","#fff","right");
-panel(528,y,468,118,12);txt("NOTAS",578,y+31,19,"800",INK);line(548,y+43,976,y+43,1,LINE);const notes=wrap(o.obs||"Gracias por confiar en Antonio Cars Service.",400);notes.slice(0,3).forEach((s,i)=>txt(s,548,y+70+i*21,14,"500",MUTED));y+=143;
+panel(28,y,468,118,10);ctx.fillStyle=RED;ctx.fillRect(48,y+18,3,24);txt("RESUMEN",66,y+34,16,"700",INK);line(48,y+43,476,y+43,1,LINE);txt("Repuestos",48,y+69,14,"500",MUTED);txt(moneyLocal(sp),476,y+69,14,"700",INK,"right");txt("Mano de obra",48,y+92,14,"500",MUTED);txt(moneyLocal(sl),476,y+92,14,"700",INK,"right");ctx.fillStyle=RED;ctx.fillRect(28,y+96,468,42);txt(title=="PRESUPUESTO"?"TOTAL PRESUPUESTO":"TOTAL",48,y+123,16,"800","#fff");txt(moneyLocal(total),476,y+123,18,"800","#fff","right");
+panel(528,y,468,118,10);ctx.fillStyle=RED;ctx.fillRect(548,y+18,3,24);txt("NOTAS",566,y+34,16,"700",INK);line(548,y+43,976,y+43,1,LINE);const notes=wrap(o.obs||"Gracias por confiar en Antonio Cars Service.",400);notes.slice(0,3).forEach((s,i)=>txt(s,548,y+70+i*21,14,"500",MUTED));y+=143;
 const footerH=190,footY=Math.max(y+8,H-footerH);
 if(footY>y){ctx.fillStyle=WHITE;ctx.fillRect(0,y,W,footY-y)}
 ctx.fillStyle=DARK;ctx.fillRect(0,footY,W,H-footY);ctx.fillStyle=RED;ctx.fillRect(0,footY,W,3);
@@ -137,6 +150,6 @@ function backup(){$("#app").innerHTML='<div class="card"><h2>Copia / Restaurar</
 function download(){let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:"application/json"}));a.download="antonio-cars-service-respaldo.json";a.click()}
 function restore(e){let r=new FileReader;r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.ots)throw 0;db=x;save();home();toast("Respaldo restaurado")}catch{toast("Archivo no válido")}};r.readAsText(e.target.files[0])}
 go("home");
-if("serviceWorker"in navigator)navigator.serviceWorker.register("./sw.js?v=13",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{});
+if("serviceWorker"in navigator)navigator.serviceWorker.register("./sw.js?v=16",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{});
 </script>
 </body></html>
