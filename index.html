@@ -23,7 +23,7 @@ main{max-width:1050px;margin:auto;padding:14px}.nav{display:flex;gap:7px;overflo
 </head>
 <body>
 
-<header class="top"><div class="brand"><img class="logoimg" src="./logo.jpg?v=26" alt="Antonio Cars Service 2025" decoding="async"></div></header>
+<header class="top"><div class="brand"><img class="logoimg" src="./logo.jpg?v=27" alt="Antonio Cars Service 2025" decoding="async"></div></header>
 <main><nav class="nav np"><button data-t="home">Inicio</button><button data-t="new">Nueva OT</button><button data-t="budget">Nuevo presupuesto</button><button data-t="open">OT abiertas</button><button data-t="history">Historial</button><button data-t="clients">Clientes</button><button data-t="backup">Copia / Restaurar</button></nav><div id="app"></div></main>
 <div id="toast" class="hidden" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;padding:11px 15px;border-radius:9px;z-index:99999"></div>
 <script>
@@ -98,7 +98,7 @@ ctx.closePath();ctx.fill();
 ctx.beginPath();ctx.moveTo(x-11,y+13);ctx.lineTo(x-19,y+21);ctx.lineTo(x-7,y+17);ctx.fill();
 ctx.restore();
 }
-const logo=new Image();logo.src="./logo.jpg?v=26";await Promise.all([new Promise(r=>{logo.onload=r;logo.onerror=r}),new Promise(r=>{clientImg.onload=r;clientImg.onerror=r}),new Promise(r=>{vehicleImg.onload=r;vehicleImg.onerror=r})]);const hasLogo=logo.complete&&logo.naturalWidth;
+const logo=new Image();logo.src="./logo.jpg?v=27";await Promise.all([new Promise(r=>{logo.onload=r;logo.onerror=r}),new Promise(r=>{clientImg.onload=r;clientImg.onerror=r}),new Promise(r=>{vehicleImg.onload=r;vehicleImg.onerror=r})]);const hasLogo=logo.complete&&logo.naturalWidth;
 const headerH=276;
 ctx.fillStyle="#f4f6f7";ctx.fillRect(0,0,W,headerH);
 const car=new Image();car.crossOrigin="anonymous";car.src="https://images.unsplash.com/photo-1767681092416-bccf9410bda4?auto=format&fit=crop&fm=jpg&q=80&w=1400";
@@ -154,6 +154,6 @@ function backup(){$("#app").innerHTML='<div class="card"><h2>Copia / Restaurar</
 function download(){let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:"application/json"}));a.download="antonio-cars-service-respaldo.json";a.click()}
 function restore(e){let r=new FileReader;r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.ots)throw 0;db=x;save();home();toast("Respaldo restaurado")}catch{toast("Archivo no válido")}};r.readAsText(e.target.files[0])}
 go("home");
-if("serviceWorker"in navigator)navigator.serviceWorker.register("./sw.js?v=26",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{});
+if("serviceWorker"in navigator)navigator.serviceWorker.register("./sw.js?v=27",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{});
 </script>
 </body></html>
