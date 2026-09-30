@@ -22,7 +22,7 @@ main{max-width:1050px;margin:auto;padding:14px}.nav{display:flex;gap:7px;overflo
 </style>
 </head>
 <body>
-<div style="position:fixed;right:8px;bottom:8px;z-index:9998;background:#111;color:#e21b2d;border:1px solid #e21b2d;border-radius:8px;padding:5px 8px;font:700 11px system-ui">ACS OT · DISEÑO PROFESIONAL v11</div>
+<div style="position:fixed;right:8px;bottom:8px;z-index:9998;background:#111;color:#e21b2d;border:1px solid #e21b2d;border-radius:8px;padding:5px 8px;font:700 11px system-ui">ACS OT · DISEÑO PROFESIONAL v12</div>
 <header class="top"><div class="brand"><img class="logoimg" src="./logo.jpg?v=16" alt="Antonio Cars Service"><div><b>ANTONIO CARS SERVICE</b><div class="muted">Órdenes de Trabajo · Chile</div></div></div></header>
 <main><nav class="nav np"><button data-t="home">Inicio</button><button data-t="new">Nueva OT</button><button data-t="budget">Nuevo presupuesto</button><button data-t="open">OT abiertas</button><button data-t="history">Historial</button><button data-t="clients">Clientes</button><button data-t="backup">Copia / Restaurar</button></nav><div id="app"></div></main>
 <div id="toast" class="hidden" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;padding:11px 15px;border-radius:9px;z-index:99999"></div>
@@ -75,8 +75,19 @@ function panel(x,y,w,h,r=12,fill=PANEL){ctx.fillStyle=fill;ctx.strokeStyle=LINE;
 function txt(t,x,y,size=16,weight="500",fill=INK,align="left"){ctx.font=weight+" "+size+"px Arial,sans-serif";ctx.fillStyle=fill;ctx.textAlign=align;ctx.fillText(String(t??""),x,y);ctx.textAlign="left"}
 function wrap(text,maxWidth){let words=String(text||"").split(/\s+/),lines=[],lt="";for(const w of words){const test=lt?lt+" "+w:w;if(ctx.measureText(test).width>maxWidth&&lt){lines.push(lt);lt=w}else lt=test}if(lt)lines.push(lt);return lines}
 function moneyLocal(n){return new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",maximumFractionDigits:0}).format(+n||0)}
-function iconUser(x,y){ctx.fillStyle=INK;ctx.beginPath();ctx.arc(x,y-11,12,0,Math.PI*2);ctx.fill();ctx.fillRect(x-18,y+7,36,25)}
-function iconCar(x,y){ctx.strokeStyle=INK;ctx.lineWidth=4;ctx.beginPath();ctx.roundRect(x-28,y-5,56,27,7);ctx.stroke();ctx.beginPath();ctx.moveTo(x-18,y-5);ctx.lineTo(x-8,y-22);ctx.lineTo(x+10,y-22);ctx.lineTo(x+20,y-5);ctx.stroke();ctx.beginPath();ctx.arc(x-16,y+23,6,0,Math.PI*2);ctx.arc(x+16,y+23,6,0,Math.PI*2);ctx.stroke()}
+function iconUser(x,y){
+ctx.save();ctx.strokeStyle=INK;ctx.lineWidth=3;ctx.lineCap="round";ctx.lineJoin="round";
+ctx.beginPath();ctx.arc(x,y-10,9,0,Math.PI*2);ctx.stroke();
+ctx.beginPath();ctx.moveTo(x-18,y+22);ctx.quadraticCurveTo(x-16,y+5,x,y+5);ctx.quadraticCurveTo(x+16,y+5,x+18,y+22);ctx.stroke();
+ctx.restore();
+}
+function iconCar(x,y){
+ctx.save();ctx.strokeStyle=INK;ctx.lineWidth=3;ctx.lineCap="round";ctx.lineJoin="round";
+ctx.beginPath();ctx.moveTo(x-27,y+7);ctx.lineTo(x-22,y-7);ctx.quadraticCurveTo(x-20,y-13,x-13,y-13);ctx.lineTo(x+13,y-13);ctx.quadraticCurveTo(x+20,y-13,x+22,y-7);ctx.lineTo(x+27,y+7);ctx.lineTo(x+27,y+15);ctx.lineTo(x-27,y+15);ctx.closePath();ctx.stroke();
+ctx.beginPath();ctx.moveTo(x-17,y-12);ctx.lineTo(x-11,y-22);ctx.lineTo(x+11,y-22);ctx.lineTo(x+17,y-12);ctx.stroke();
+ctx.beginPath();ctx.arc(x-16,y+16,4,0,Math.PI*2);ctx.arc(x+16,y+16,4,0,Math.PI*2);ctx.stroke();
+ctx.restore();
+}
 function iconWrench(x,y){ctx.strokeStyle=RED;ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(x-20,y+18);ctx.lineTo(x+12,y-14);ctx.stroke();ctx.beginPath();ctx.arc(x+17,y-19,10,.35,2.4);ctx.stroke()}
 function iconDoc(x,y){ctx.strokeStyle=RED;ctx.lineWidth=3;ctx.strokeRect(x-16,y-21,32,42);line(x-8,y-9,x+9,y-9,2,RED);line(x-8,y,x+9,y,2,RED);line(x-8,y+9,x+5,y+9,2,RED)}
 function iconCheck(x,y){ctx.strokeStyle=RED;ctx.lineWidth=3;ctx.beginPath();ctx.arc(x,y,25,0,Math.PI*2);ctx.stroke();line(x-9,y,x-2,y+8,3,"#fff");line(x-2,y+8,x+11,y-9,3,"#fff")}
