@@ -23,7 +23,7 @@ main{max-width:1050px;margin:auto;padding:14px}.nav{display:flex;gap:7px;overflo
 </head>
 <body>
 
-<header class="top"><div class="brand"><img class="logoimg" src="./logo.png?v=28" alt="Antonio Cars Service 2025" decoding="async"></div></header>
+<header class="top"><div class="brand"><img class="logoimg" src="./logo.jpg?v=29" alt="Antonio Cars Service" decoding="async" onerror="this.onerror=null;this.src='./logo.png?v=29'"></div></header>
 <main><nav class="nav np"><button data-t="home">Inicio</button><button data-t="new">Nueva OT</button><button data-t="budget">Nuevo presupuesto</button><button data-t="open">OT abiertas</button><button data-t="history">Historial</button><button data-t="clients">Clientes</button><button data-t="backup">Copia / Restaurar</button></nav><div id="app"></div></main>
 <div id="toast" class="hidden" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;padding:11px 15px;border-radius:9px;z-index:99999"></div>
 <script>
@@ -54,7 +54,7 @@ function compressPhoto(file,done){let r=new FileReader;r.onload=()=>{let im=new 
 function persistCurrentOT(){if(!edit)return;let i=db.ots.findIndex(x=>x.id==edit.id);if(i<0){if(!edit.id)edit.id=crypto.randomUUID();db.ots.push(edit)}else db.ots[i]=edit;save()}
 function drawPhotos(){$("#photos").innerHTML=(edit.photos||[]).map((p,i)=>{let src=typeof p=="string"?p:p.data;return'<div><img src="'+src+'"><button class="btn np" onclick="removePhoto('+i+')">×</button><small>'+esc(typeof p=="string"?"Foto "+(i+1):(p.name||"Foto "+(i+1)))+'</small></div>'}).join("")}
 function removePhoto(i){if(!edit.photos)return;edit.photos.splice(i,1);persistCurrentOT();drawPhotos();toast("Foto eliminada")}
-function saveOT(){let p=plate(val("plate"));if(!p)return toast("Ingresa la patente");let c={name:val("name"),rut:val("rut"),phone:val("phone"),email:val("email"),address:val("address")},v={km:val("km"),make:val("make"),model:val("model"),year:val("year"),color:val("color"),fuel:val("fuel"),vin:val("vin"),ck:c.rut||c.name};edit.plate=p;edit.client=c;edit.vehicle=v;edit.reason=val("reason");edit.diagnosis=val("diagnosis");edit.reception=val("reception");edit.mechanic=val("mechanic");edit.status=val("status");edit.obs=val("obs");edit.checks=[0,1,2,3].map(i=>$("#ch"+i)?.checked);edit.updated=new Date().toISOString();let i=db.ots.findIndex(x=>x.id==edit.id);if(i<0){edit.id=crypto.randomUUID();db.ots.push(edit)}else db.ots[i]=edit;db.clients[c.rut||c.name]=c;v.ck=c.rut||c.name;db.vehicles[p]=v;save();toast("Guardado");setTimeout(()=>view(edit.id),250)}
+function saveOT(){if(edit?.items){document.querySelectorAll("#items .desc").forEach(el=>{let i=+el.dataset.i;if(edit.items[i])edit.items[i].desc=el.value});document.querySelectorAll("#items .qty").forEach(el=>{let i=+el.dataset.i;if(edit.items[i])edit.items[i].qty=+el.value||1});document.querySelectorAll("#items .price").forEach(el=>{let i=+el.dataset.i;if(edit.items[i])edit.items[i].price=+el.value||0});edit.total=(edit.items||[]).reduce((t,x)=>t+(+x.qty||1)*(+x.price||0),0)}let p=plate(val("plate"));if(!p)return toast("Ingresa la patente");let c={name:val("name"),rut:val("rut"),phone:val("phone"),email:val("email"),address:val("address")},v={km:val("km"),make:val("make"),model:val("model"),year:val("year"),color:val("color"),fuel:val("fuel"),vin:val("vin"),ck:c.rut||c.name};edit.plate=p;edit.client=c;edit.vehicle=v;edit.reason=val("reason");edit.diagnosis=val("diagnosis");edit.reception=val("reception");edit.mechanic=val("mechanic");edit.status=val("status");edit.obs=val("obs");edit.checks=[0,1,2,3].map(i=>$("#ch"+i)?.checked);edit.updated=new Date().toISOString();let i=db.ots.findIndex(x=>x.id==edit.id);if(i<0){edit.id=crypto.randomUUID();db.ots.push(edit)}else db.ots[i]=edit;db.clients[c.rut||c.name]=c;v.ck=c.rut||c.name;db.vehicles[p]=v;save();toast("Guardado");setTimeout(()=>view(edit.id),250)}
 function view(id){edit=db.ots.find(x=>x.id==id);if(!edit)return;$("#app").innerHTML='<div class="card"><div class="actions np"><button class="btn" onclick="go(\'home\')">← Inicio</button><button class="btn primary" onclick="editOT(edit.id)">Editar</button><button class="btn" onclick="printOT()">Imprimir / PDF</button><button class="btn primary" onclick="showBudgetImage()">Vista previa profesional</button><button class="btn primary" onclick="shareBudgetImage()">Compartir imagen profesional</button><button class="btn" onclick="shareBudgetImage()">WhatsApp · Imagen</button></div><h2>'+(edit.mode=="presupuesto"?"PRESUPUESTO ":"ORDEN DE TRABAJO ")+esc(edit.no)+'</h2><div class="muted">'+fmt(edit.created)+' · '+status(edit.status)+'</div></div><div class="grid"><div class="card"><h3>Cliente</h3><b>'+esc(edit.client?.name||"")+'</b><p>RUT: '+esc(edit.client?.rut||"")+'<br>Tel: '+esc(edit.client?.phone||"")+'<br>'+esc(edit.client?.email||"")+'<br>'+esc(edit.client?.address||"")+'</p></div><div class="card"><h3>Vehículo</h3><b>'+esc(edit.plate||"")+'</b> · '+esc(edit.vehicle?.make||"")+" "+esc(edit.vehicle?.model||"")+'<p>Año: '+esc(edit.vehicle?.year||"")+' · KM: '+esc(edit.vehicle?.km||"")+'<br>VIN: '+esc(edit.vehicle?.vin||"")+'<br>'+esc(edit.vehicle?.color||"")+' · '+esc(edit.vehicle?.fuel||"")+'</p></div></div><div class="card"><h3>Recepción</h3><p>'+esc(edit.reason||"")+'</p><h3>Diagnóstico / trabajos</h3><p>'+esc(edit.diagnosis||"")+'</p><p>'+esc(edit.reception||"")+'</p><p>Responsable: <b>'+esc(edit.mechanic||"")+'</b></p></div><div class="card"><h3>Repuestos y mano de obra</h3><div class="actions np"><button class="btn primary" onclick="editOT(edit.id)">Modificar y agregar ítems</button></div><table style="width:100%"><tbody>'+((edit.items||[]).map(x=>'<tr><td>'+esc(x.type=="part"?"Repuesto":"Mano de obra")+'</td><td>'+esc(x.desc)+'</td><td>'+x.qty+'</td><td>'+money(x.price)+'</td><td>'+money((+x.qty||1)*(+x.price||0))+'</td></tr>').join(""))+'</tbody></table><div class="total">TOTAL '+money(edit.total)+'</div></div><div class="card"><h3>Fotos</h3><div class="photos">'+(edit.photos||[]).map(p=>'<img src="'+(typeof p=="string"?p:p.data)+'">').join("")+'</div></div>'}
 function quickAdd(id,type){let o=db.ots.find(x=>x.id===id);if(!o)return;o.items=o.items||[];o.items.push({type,desc:"",qty:1,price:0});edit=o;save();newOT(o);setTimeout(()=>{let a=document.querySelectorAll("#items input.desc");a[a.length-1]?.focus()},80)}
 function printOT(){window.print()}
@@ -66,7 +66,7 @@ function drawIcon(ctx,x,y,type){ctx.save();ctx.fillStyle="#111";ctx.strokeStyle=
 async function makeBudgetImage(){
 const o=edit;if(!o)return null;
 const all=o.items||[],parts=all.filter(x=>x.type=="part"),labor=all.filter(x=>x.type=="labor");
-const W=1024,rowH=44,extra=Math.max(0,parts.length-4)*rowH+Math.max(0,labor.length-3)*rowH;
+const W=1024,rowH=44,extra=Math.max(0,parts.length-4)*rowH+Math.max(0,labor.length-3)*rowH+all.length*18;
 const H=1536+extra,c=document.createElement("canvas"),ctx=c.getContext("2d");c.width=W;c.height=H;
 const WHITE="#f6f7f8",PANEL="#fff",INK="#182028",MUTED="#5f6870",LINE="#d8dde2",RED="#e51b2b",DARK="#10161b";
 ctx.fillStyle=WHITE;ctx.fillRect(0,0,W,H);
@@ -98,7 +98,7 @@ ctx.closePath();ctx.fill();
 ctx.beginPath();ctx.moveTo(x-11,y+13);ctx.lineTo(x-19,y+21);ctx.lineTo(x-7,y+17);ctx.fill();
 ctx.restore();
 }
-const logo=new Image();logo.src="./logo.png?v=28";await Promise.all([new Promise(r=>{logo.onload=r;logo.onerror=r}),new Promise(r=>{clientImg.onload=r;clientImg.onerror=r}),new Promise(r=>{vehicleImg.onload=r;vehicleImg.onerror=r})]);const hasLogo=logo.complete&&logo.naturalWidth;
+const logo=new Image();logo.src="./logo.jpg?v=29";logo.onerror=()=>{logo.src="./logo.png?v=29"};await Promise.all([new Promise(r=>{logo.onload=r;logo.onerror=r}),new Promise(r=>{clientImg.onload=r;clientImg.onerror=r}),new Promise(r=>{vehicleImg.onload=r;vehicleImg.onerror=r})]);const hasLogo=logo.complete&&logo.naturalWidth;
 const headerH=276;
 ctx.fillStyle="#f4f6f7";ctx.fillRect(0,0,W,headerH);
 const car=new Image();car.crossOrigin="anonymous";car.src="https://images.unsplash.com/photo-1767681092416-bccf9410bda4?auto=format&fit=crop&fm=jpg&q=80&w=1400";
@@ -128,7 +128,40 @@ const clientRows=[["Nombre:",o.client?.name||"—"],["Teléfono:",o.client?.phon
 const vehicleRows=[["Patente:",o.plate||"—"],["Marca:",o.vehicle?.make||"—"],["Modelo:",o.vehicle?.model||"—"],["Año:",o.vehicle?.year||"—"]];vehicleRows.forEach((r,i)=>{txt(r[0],622,y+70+i*25,14,"700",INK);txt(r[1],705,y+70+i*25,14,"500",MUTED)});txt("Kilometraje:",820,y+145,14,"700",INK);txt((o.vehicle?.km||"—")+" km",910,y+145,14,"500",MUTED);y+=166;
 function info(title,value,ico){const lines=wrap(value||"No informado",860);const h=Math.max(74,44+Math.min(3,lines.length)*22);panel(28,y,968,h,10);ctx.fillStyle=RED;ctx.fillRect(48,y+18,3,28);txt(title,66,y+38,16,"700",INK);lines.slice(0,3).forEach((s,i)=>txt(s,66,y+61+i*22,14,"500",MUTED));y+=h+10}
 info("MOTIVO DE INGRESO",o.reason,iconWrench);if(o.diagnosis)info("DIAGNÓSTICO / TRABAJO",o.diagnosis,iconWrench);
-function table(title,arr,isLabor){panel(28,y,968,44,10,"#fff");ctx.fillStyle=RED;ctx.fillRect(48,y+12,3,22);txt(title,66,y+30,16,"700",INK);y+=44;ctx.fillStyle=DARK;ctx.fillRect(28,y,968,38);txt("Descripción",48,y+25,13,"700","#fff");txt(isLabor?"Cantidad (hrs)":"Cantidad",545,y+25,13,"700","#fff","center");txt("Precio Unitario",735,y+25,13,"700","#fff","center");txt("Subtotal",974,y+25,13,"700","#fff","right");y+=38;let sum=0;arr.forEach((it,i)=>{const qty=+it.qty||1,price=+it.price||0,sub=qty*price;sum+=sub;ctx.fillStyle=i%2?"#fff":"#f7f8f9";ctx.fillRect(28,y,968,rowH);line(28,y+rowH,996,y+rowH,1,LINE);const d=String(it.desc||"Sin descripción");txt(d.length>60?d.slice(0,60)+"…":d,48,y+28,14,"500",INK);txt(isLabor?Number(qty).toFixed(1).replace(".",","):String(qty),545,y+28,14,"600",INK,"center");txt(moneyLocal(price),735,y+28,14,"600",INK,"center");txt(moneyLocal(sub),974,y+28,14,"700",INK,"right");y+=rowH});ctx.fillStyle=RED;ctx.fillRect(690,y,306,38);txt("Total "+(isLabor?"Mano de Obra":"Repuestos"),708,y+25,13,"700","#fff");txt(moneyLocal(sum),974,y+25,16,"800","#fff","right");y+=48;return sum}
+function table(title,arr,isLabor){
+panel(28,y,968,44,10,"#fff");
+ctx.fillStyle=RED;ctx.fillRect(48,y+12,3,22);
+txt(title,66,y+30,16,"700",INK);
+y+=44;
+ctx.fillStyle=DARK;ctx.fillRect(28,y,968,38);
+txt("Descripción",48,y+25,13,"700","#fff");
+txt(isLabor?"Cantidad (hrs)":"Cantidad",545,y+25,13,"700","#fff","center");
+txt("Precio Unitario",735,y+25,13,"700","#fff","center");
+txt("Subtotal",974,y+25,13,"700","#fff","right");
+y+=38;
+let sum=0;
+arr.forEach((it,i)=>{
+  const qty=+it.qty||1,price=+it.price||0,sub=qty*price;
+  sum+=sub;
+  const d=String(it.desc||"Sin descripción");
+  ctx.font="500 14px Arial,sans-serif";
+  const lines=wrapCanvasText(ctx,d,470).slice(0,2);
+  const rh=lines.length>1?58:44;
+  ctx.fillStyle=i%2?"#fff":"#f7f8f9";
+  ctx.fillRect(28,y,968,rh);
+  line(28,y+rh,996,y+rh,1,LINE);
+  lines.forEach((lineText,j)=>txt(lineText,48,y+25+j*18,14,"500",INK));
+  txt(isLabor?Number(qty).toFixed(1).replace(".",","):String(qty),545,y+Math.min(28,rh-16),14,"600",INK,"center");
+  txt(moneyLocal(price),735,y+Math.min(28,rh-16),14,"600",INK,"center");
+  txt(moneyLocal(sub),974,y+Math.min(28,rh-16),14,"700",INK,"right");
+  y+=rh;
+});
+ctx.fillStyle=RED;ctx.fillRect(690,y,306,38);
+txt("Total "+(isLabor?"Mano de Obra":"Repuestos"),708,y+25,13,"700","#fff");
+txt(moneyLocal(sum),974,y+25,16,"800","#fff","right");
+y+=48;
+return sum
+}
 const sp=table("REPUESTOS",parts,false),sl=table("MANO DE OBRA",labor,true),total=sp+sl;
 panel(28,y,468,118,10);ctx.fillStyle=RED;ctx.fillRect(48,y+18,3,24);txt("RESUMEN",66,y+34,16,"700",INK);line(48,y+43,476,y+43,1,LINE);txt("Repuestos",48,y+69,14,"500",MUTED);txt(moneyLocal(sp),476,y+69,14,"700",INK,"right");txt("Mano de obra",48,y+92,14,"500",MUTED);txt(moneyLocal(sl),476,y+92,14,"700",INK,"right");ctx.fillStyle=RED;ctx.fillRect(28,y+96,468,42);txt(title=="PRESUPUESTO"?"TOTAL PRESUPUESTO":"TOTAL",48,y+123,16,"800","#fff");txt(moneyLocal(total),476,y+123,18,"800","#fff","right");
 panel(528,y,468,118,10);ctx.fillStyle=RED;ctx.fillRect(548,y+18,3,24);txt("NOTAS",566,y+34,16,"700",INK);line(548,y+43,976,y+43,1,LINE);const notes=wrap(o.obs||"Gracias por confiar en Antonio Cars Service.",400);notes.slice(0,3).forEach((s,i)=>txt(s,548,y+70+i*21,14,"500",MUTED));y+=143;
@@ -154,6 +187,6 @@ function backup(){$("#app").innerHTML='<div class="card"><h2>Copia / Restaurar</
 function download(){let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:"application/json"}));a.download="antonio-cars-service-respaldo.json";a.click()}
 function restore(e){let r=new FileReader;r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.ots)throw 0;db=x;save();home();toast("Respaldo restaurado")}catch{toast("Archivo no válido")}};r.readAsText(e.target.files[0])}
 go("home");
-if("serviceWorker"in navigator)navigator.serviceWorker.register("./sw.js?v=28",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{});
+if("serviceWorker"in navigator)navigator.serviceWorker.register("./sw.js?v=29",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{});
 </script>
 </body></html>
