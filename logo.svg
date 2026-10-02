@@ -1,15 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1320 650">
-<rect width="1320" height="650" fill="#fff"/>
-<g transform="translate(-5 0)">
-<polygon points="500,45 521.5,86.4 553.1,52 563.1,97.6 602.5,72.5 600.4,119.1 645,105 630.9,149.6 677.5,147.5 652.4,186.9 698,196.9 663.6,228.5 705,250 663.6,271.5 698,303.1 652.4,313.1 677.5,352.5 630.9,350.4 645,395 600.4,380.9 602.5,427.5 563.1,402.4 553.1,448 521.5,413.6 500,455 478.5,413.6 446.9,448 436.9,402.4 397.5,427.5 399.6,380.9 355,395 369.1,350.4 322.5,352.5 347.6,313.1 302,303.1 336.4,271.5 295,250 336.4,228.5 302,196.9 347.6,186.9 322.5,147.5 369.1,149.6 355,105 399.6,119.1 397.5,72.5 436.9,97.6 446.9,52 478.5,86.4" fill="#000"/>
-<circle cx="500" cy="250" r="185" fill="#fff" stroke="#ed1c24" stroke-width="9"/>
-<circle cx="500" cy="250" r="150" fill="#fff"/>
-<text x="500" y="315" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="190" font-weight="900" font-style="italic" fill="#000" letter-spacing="-10">ANTONIO</text>
-<text x="500" y="405" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="58" font-weight="800" font-style="italic" fill="#ed1c24" letter-spacing="2">CARS SERVICE</text>
-<g transform="translate(530 455)">
-<rect x="0" y="0" width="590" height="5" fill="#333"/>
-<rect x="0" y="10" width="590" height="5" fill="#ed1c24"/>
-<polygon points="590,0 650,7 590,14" fill="#333"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 700">
+<rect width="1400" height="700" fill="#fff"/>
+<defs><filter id="shadow" x="-20%" y="-20%" width="150%" height="150%"><feDropShadow dx="7" dy="8" stdDeviation="2" flood-color="#777" flood-opacity=".65"/></filter></defs>
+<g transform="translate(-120 0)">
+<polygon points="455,45 477,87 510,54 520,101 561,75 559,122 606,108 592,153 639,151 614,191 660,201 625,233 667,255 625,277 660,309 614,319 639,359 592,357 606,402 559,388 561,435 520,409 510,456 477,423 455,465 433,423 400,456 390,409 349,435 351,388 304,402 318,357 271,359 296,319 250,309 285,277 243,255 285,233 250,201 296,191 271,151 318,153 304,108 351,122 349,75 390,101 400,54 433,87" fill="#000"/>
+<polygon points="455,45 477,87 510,54 520,101 561,75 559,122 606,108 592,153 639,151 614,191 660,201 625,233 667,255 625,277 660,309 614,319 639,359 592,357 606,402 559,388 561,435 520,409 510,456 477,423 455,465 433,423 400,456 390,409 349,435 351,388 304,402 318,357 271,359 296,319 250,309 285,277 243,255 285,233 250,201 296,191 271,151 318,153 304,108 351,122 349,75 390,101 400,54 433,87" fill="none" stroke="#ed1c24" stroke-width="9" transform="translate(8 0)"/>
+<circle cx="455" cy="255" r="190" fill="#fff" stroke="#ed1c24" stroke-width="9"/>
+<circle cx="455" cy="255" r="158" fill="#fff"/>
+<g filter="url(#shadow)">
+<text x="455" y="325" text-anchor="middle" font-family="Arial Black,Arial,Helvetica,sans-serif" font-size="190" font-weight="900" font-style="italic" fill="#000" letter-spacing="-10">ANTONIO</text>
 </g>
-<text x="1030" y="565" font-family="Arial,Helvetica,sans-serif" font-size="48" font-weight="800" font-style="italic" fill="#ed1c24">2025</text>
+<text x="455" y="414" text-anchor="middle" font-family="Arial Black,Arial,Helvetica,sans-serif" font-size="60" font-weight="900" font-style="italic" fill="#ed1c24" letter-spacing="2">CARS SERVICE</text>
+<g transform="translate(500 460)">
+<rect x="0" y="0" width="610" height="5" fill="#333"/>
+<rect x="0" y="12" width="610" height="5" fill="#ed1c24"/>
+<polygon points="610,0 665,8 610,17" fill="#333"/>
+<polygon points="610,12 650,17 610,17" fill="#ed1c24"/>
+</g>
+<text x="1010" y="575" font-family="Arial Black,Arial,Helvetica,sans-serif" font-size="52" font-weight="900" font-style="italic" fill="#ed1c24">2025</text>
 </g></svg>
