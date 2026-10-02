@@ -161,6 +161,24 @@ textarea{min-height:82px;resize:vertical}
  .hero-logo{max-height:180px}
  .quick{min-height:72px}
 }
+/* V51 — vista previa profesional, solo visual */
+.preview-shell{padding:0 14px 46px;background:radial-gradient(circle at 50% 0%,rgba(227,27,45,.12),transparent 34%),rgba(3,5,8,.97);backdrop-filter:blur(16px)}
+.preview-bar{width:min(1100px,100%);margin:0 auto;min-height:76px;padding:12px 2px;gap:14px;background:linear-gradient(180deg,rgba(7,9,12,.98),rgba(7,9,12,.84));border-bottom:1px solid rgba(255,255,255,.08)}
+.preview-head{display:flex;align-items:center;gap:12px;min-width:0}
+.preview-mark{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,#ff3345,#bf0e1e);box-shadow:0 8px 22px rgba(227,27,45,.25);font-weight:900;font-size:18px}
+.preview-title{min-width:0}.preview-title b{display:block;font-size:16px;letter-spacing:.01em}.preview-title small{display:block;color:#8f98a2;font-size:11px;margin-top:2px}
+.preview-close{border-color:#3a424d!important;background:#141920!important;border-radius:12px!important;padding:9px 13px!important}
+.preview-stage{width:min(1100px,100%);margin:18px auto 0;padding:18px;border:1px solid rgba(255,255,255,.09);border-radius:22px;background:linear-gradient(145deg,rgba(22,27,34,.9),rgba(9,12,16,.94));box-shadow:0 28px 80px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.035)}
+.preview-paper{background:#f6f7f8;border-radius:12px;overflow:hidden;box-shadow:0 18px 55px rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.15)}
+.preview-img{width:100%;max-width:none;margin:0;border-radius:0;box-shadow:none;display:block}
+.preview-actions{width:min(1100px,100%);margin:14px auto 0;padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(13,17,22,.92);box-shadow:0 15px 38px rgba(0,0,0,.28);gap:9px}
+.preview-actions .btn{min-height:44px;padding:10px 16px;font-weight:750}
+.preview-tip{width:min(1100px,100%);margin:9px auto 0;text-align:center;color:#7f8993;font-size:11px;letter-spacing:.02em}
+@media(max-width:700px){
+ .preview-shell{padding:0 8px 28px}.preview-bar{min-height:66px}.preview-mark{width:34px;height:34px;border-radius:10px}
+ .preview-title b{font-size:14px}.preview-title small{font-size:10px}.preview-stage{margin-top:10px;padding:8px;border-radius:16px}
+ .preview-paper{border-radius:9px}.preview-actions{padding:9px;margin-top:9px;border-radius:13px}.preview-actions .btn{flex:1;min-width:140px}
+}
 </style></head>
 <body>
 
@@ -293,7 +311,7 @@ ctx.closePath();ctx.fill();
 ctx.beginPath();ctx.moveTo(x-11,y+13);ctx.lineTo(x-19,y+21);ctx.lineTo(x-7,y+17);ctx.fill();
 ctx.restore();
 }
-const logo=new Image();let logoReady;logoReady=new Promise(resolve=>{let done=false;const finish=()=>{if(done)return;done=true;resolve()};logo.onload=finish;logo.onerror=finish;logo.src="./logo-original.jpg?v=48";});const clientReady=new Promise(r=>{clientImg.onload=r;clientImg.onerror=r});const vehicleReady=new Promise(r=>{vehicleImg.onload=r;vehicleImg.onerror=r});await Promise.all([logoReady,clientReady,vehicleReady]);const hasLogo=logo.complete&&logo.naturalWidth;
+const logo=new Image();let logoReady;logoReady=new Promise(resolve=>{let done=false;const finish=()=>{if(done)return;done=true;resolve()};logo.onload=finish;logo.onerror=finish;logo.src="./logo-original.jpg?v=51";});const clientReady=new Promise(r=>{clientImg.onload=r;clientImg.onerror=r});const vehicleReady=new Promise(r=>{vehicleImg.onload=r;vehicleImg.onerror=r});await Promise.all([logoReady,clientReady,vehicleReady]);const hasLogo=logo.complete&&logo.naturalWidth;
 const headerH=276;
 ctx.fillStyle="#f4f6f7";ctx.fillRect(0,0,W,headerH);
 const car=new Image();car.crossOrigin="anonymous";car.src="https://images.unsplash.com/photo-1767681092416-bccf9410bda4?auto=format&fit=crop&fm=jpg&q=80&w=1400";
@@ -371,7 +389,7 @@ for(const x of[760,858,956]){iconCheck(x,footY+55);txt(x==760?"SERVICIO":x==858?
 ctx.fillStyle=RED;ctx.fillRect(0,H-38,W,38);txt("CALIDAD   •   CONFIANZA   •   TU AUTO EN BUENAS MANOS",512,H-14,12,"600","#fff","center");
 return c
 }
-async function showBudgetImage(){try{let b=await getBudgetBlob();if(!b)return;let old=$("#imagePreview");if(old)old.remove();let modal=document.createElement("div");modal.id="imagePreview";modal.className="preview-shell";modal.innerHTML='<div class="preview-bar"><b>Vista previa profesional</b><button type="button" class="btn" id="closePreview">Cerrar</button></div><img id="previewImg" class="preview-img"><div class="preview-actions"><button class="btn primary" id="sharePreview">Compartir imagen</button><button class="btn" id="savePreview">Guardar imagen</button></div>';document.body.appendChild(modal);$("#previewImg").src=URL.createObjectURL(b);$("#closePreview").onclick=()=>modal.remove();$("#sharePreview").onclick=shareBudgetImage;$("#savePreview").onclick=()=>{let a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="antonio-cars-service-"+(edit.no||"documento")+".jpg";a.click();toast("Imagen guardada")}}catch(e){console.error(e);toast("No se pudo generar la vista previa")}}
+async function showBudgetImage(){try{let b=await getBudgetBlob();if(!b)return;let old=$("#imagePreview");if(old)old.remove();let modal=document.createElement("div");modal.id="imagePreview";modal.className="preview-shell";modal.innerHTML='<div class="preview-bar"><div class="preview-head"><div class="preview-mark">A</div><div class="preview-title"><b>Vista previa profesional</b><small>'+esc(edit?.no||"Documento")+' · '+esc(edit?.mode=="presupuesto"?"Presupuesto":"Orden de trabajo")+'</small></div></div><button type="button" class="btn preview-close" id="closePreview">Cerrar</button></div><div class="preview-stage"><div class="preview-paper"><img id="previewImg" class="preview-img" alt="Vista previa profesional de Antonio Cars Service"></div></div><div class="preview-actions"><button class="btn primary" id="sharePreview">Compartir imagen</button><button class="btn" id="savePreview">Guardar imagen</button></div><div class="preview-tip">Documento listo para enviar al cliente · formato imagen de alta calidad</div>';document.body.appendChild(modal);$("#previewImg").src=URL.createObjectURL(b);$("#closePreview").onclick=()=>modal.remove();$("#sharePreview").onclick=shareBudgetImage;$("#savePreview").onclick=()=>{let a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="antonio-cars-service-"+(edit.no||"documento")+".jpg";a.click();toast("Imagen guardada")}}catch(e){console.error(e);toast("No se pudo generar la vista previa")}}
 async function shareBudgetImage(){try{let b=await getBudgetBlob();if(!b)return;let file=new File([b],"antonio-cars-service-"+(edit.no||"documento")+".jpg",{type:"image/jpeg"});if(navigator.share){if(!navigator.canShare||navigator.canShare({files:[file]})){await navigator.share({title:"Antonio Cars Service - "+edit.no,files:[file]});toast("Imagen lista para compartir");return}}let a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=file.name;a.click();toast("Imagen guardada. Puedes compartirla desde Fotos/Archivos.")}catch(e){if(e.name!="AbortError"){console.error(e);try{let b=await getBudgetBlob();let a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="antonio-cars-service-"+(edit.no||"documento")+".jpg";a.click();toast("No se abrió compartir; imagen guardada.")}catch{toast("No se pudo generar la imagen")}}}}
 function shareOT(){return shareBudgetImage()}function wa(){return shareBudgetImage()}
 function open(){$("#app").innerHTML='<div class="card"><h2>OT abiertas</h2><div class="list">'+db.ots.filter(x=>x.status!="Entregado").sort((a,b)=>(b.updated||b.created).localeCompare(a.updated||a.created)).map(card).join("")||'<div class="empty">No hay OT abiertas.</div>'+"</div></div>"}
