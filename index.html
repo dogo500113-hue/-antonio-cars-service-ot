@@ -6,24 +6,139 @@
 <meta name="theme-color" content="#07080a">
 <link rel="manifest" href="./manifest.webmanifest">
 <title>Antonio Cars Service — OT</title>
-<style>
-:root{--r:#e21b2d;--r2:#ff3345;--bg:#07080a;--c:#14161a;--l:#30343a;--m:#a7abb1;--w:#fff}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--w);font:15px system-ui,-apple-system,BlinkMacSystemFont,sans-serif}
-button,input,select,textarea{font:inherit}button{cursor:pointer}.top{padding:12px 15px;background:#090a0c;border-bottom:1px solid #292c31;position:sticky;top:0;z-index:3}
-.brand{display:flex;align-items:center;justify-content:center;width:100%;overflow:hidden}.logoimg{width:min(600px,96vw);height:auto;max-height:250px;border-radius:0;object-fit:contain;object-position:center;background:#fff;padding:0;margin:0 auto;display:block;flex:0 1 auto;image-rendering:auto}.muted{color:var(--m)}
-main{max-width:1050px;margin:auto;padding:14px}.nav{display:flex;gap:7px;overflow:auto;margin-bottom:14px}.nav button,.btn{border:1px solid var(--l);background:var(--c);color:#fff;border-radius:9px;padding:10px 12px;white-space:nowrap}.nav .on,.primary{background:var(--r);border-color:var(--r)}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{background:var(--c);border:1px solid var(--l);border-radius:14px;padding:14px;margin-bottom:12px}
-.stat{font-size:27px;font-weight:800}label{display:block;font-size:12px;color:#ddd;margin-bottom:9px}input,select,textarea{width:100%;background:#101216;color:#fff;border:1px solid var(--l);border-radius:8px;padding:10px;margin-top:5px}textarea{min-height:75px}
-.actions{display:flex;gap:7px;flex-wrap:wrap}.list{display:grid;gap:7px}.item{padding:11px;background:#101216;border:1px solid var(--l);border-radius:10px;cursor:pointer}.pill{border:1px solid var(--l);border-radius:99px;padding:4px 8px;font-size:11px}.red{color:#ff909a;border-color:#7b2029}.green{color:#72e0b5;border-color:#17684b}.total{text-align:right;font-size:21px;font-weight:800;margin-top:12px}
-.photos{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.photos img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:7px}.empty{text-align:center;color:var(--m);padding:22px}.hidden{display:none!important}
-.preview-shell{position:fixed;inset:0;background:#050608;z-index:9999;overflow:auto;padding:12px 10px 90px}.preview-bar{max-width:900px;margin:0 auto 10px;display:flex;justify-content:space-between;align-items:center;gap:8px;position:sticky;top:0;z-index:2;padding:8px 0;background:#050608}.preview-bar b{font-size:17px}.preview-img{display:block;width:min(100%,900px);height:auto;margin:0 auto;border-radius:8px;box-shadow:0 15px 60px rgba(0,0,0,.65)}.preview-actions{max-width:900px;margin:12px auto 0;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
-@media(max-width:700px){.grid,.g3{grid-template-columns:1fr}.photos{grid-template-columns:repeat(3,1fr)}}
+<style>:root{
+  --r:#e31b2d;--r2:#ff4050;--bg:#07090c;--bg2:#0b0e13;--c:#11151b;--c2:#171c23;
+  --l:#2b323b;--l2:#3b444f;--m:#9ca5af;--w:#fff;--ink:#f5f7fa;--gold:#c9cdd2;
+}
+*{box-sizing:border-box}
+html{background:#07090c}
+body{
+  margin:0;min-height:100vh;color:var(--w);
+  font:15px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 50% -10%,rgba(227,27,45,.18),transparent 32%),
+    radial-gradient(circle at 100% 45%,rgba(255,255,255,.035),transparent 25%),
+    linear-gradient(145deg,#05070a,#0a0d12 48%,#06080b);
+}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(to bottom,#000,transparent 82%)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.top{
+  position:sticky;top:0;z-index:50;padding:10px 14px 12px;
+  background:rgba(6,8,11,.90);backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  box-shadow:0 8px 30px rgba(0,0,0,.28);
+}
+.brand{display:flex;align-items:center;justify-content:center;width:100%;overflow:hidden;min-height:76px}
+.logoimg{
+  width:min(430px,88vw);height:auto;max-height:92px;border:0;border-radius:0;
+  object-fit:contain;object-position:center;background:#fff;padding:0;margin:0 auto;
+  display:block;flex:0 1 auto;image-rendering:auto;
+}
+main{max-width:1120px;margin:auto;padding:16px 16px 42px;position:relative;z-index:1}
+.nav{
+  display:flex;gap:7px;overflow:auto;margin:0 -2px 18px;padding:4px 2px 7px;
+  scrollbar-width:none;
+}
+.nav::-webkit-scrollbar{display:none}
+.nav button,.btn{
+  border:1px solid #303741;background:linear-gradient(180deg,#171b21,#101318);
+  color:#fff;border-radius:11px;padding:10px 13px;white-space:nowrap;
+  box-shadow:0 5px 16px rgba(0,0,0,.22);transition:.18s ease;
+}
+.nav button:hover,.btn:hover{transform:translateY(-1px);border-color:#505a66}
+.nav .on,.primary{
+  background:linear-gradient(180deg,#ff3042,#d90f21);border-color:#ff3c4d;
+  box-shadow:0 8px 22px rgba(227,27,45,.24);
+}
+.muted{color:var(--m)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{
+  position:relative;background:linear-gradient(145deg,rgba(24,29,36,.96),rgba(13,16,21,.96));
+  border:1px solid rgba(255,255,255,.09);border-radius:18px;padding:17px;margin-bottom:14px;
+  box-shadow:0 14px 35px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.025);
+}
+.card h2,.card h3{margin-top:0;letter-spacing:.01em}
+.card h2{font-size:24px}.card h3{font-size:17px}
+.stat{font-size:30px;font-weight:850}
+label{display:block;font-size:12px;color:#d9dde2;margin-bottom:10px}
+input,select,textarea{
+  width:100%;background:#0b0e13;color:#fff;border:1px solid #303741;border-radius:11px;
+  padding:11px 12px;margin-top:5px;outline:none;box-shadow:inset 0 1px 4px rgba(0,0,0,.35);
+}
+input:focus,select:focus,textarea:focus{border-color:#e52a3a;box-shadow:0 0 0 3px rgba(227,27,45,.13)}
+textarea{min-height:82px;resize:vertical}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.list{display:grid;gap:9px}
+.item{
+  padding:14px;background:linear-gradient(145deg,#171c22,#0e1116);
+  border:1px solid #2b323b;border-radius:13px;cursor:pointer;box-shadow:0 8px 20px rgba(0,0,0,.18);
+}
+.item:hover{border-color:#59636e}
+.pill{border:1px solid #3a424c;border-radius:99px;padding:4px 9px;font-size:11px;background:#10141a}
+.red{color:#ff9ca5;border-color:#7f2630;background:#241014}
+.green{color:#7ee7bc;border-color:#1d684e;background:#0c241b}
+.total{text-align:right;font-size:22px;font-weight:850;margin-top:14px}
+.photos{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.photos img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;border:1px solid #353d46}
+.empty{text-align:center;color:var(--m);padding:26px}
+.hidden{display:none!important}
+.line-item{border-bottom-color:#303741!important}
+.preview-shell{position:fixed;inset:0;background:#050608;z-index:9999;overflow:auto;padding:12px 10px 90px}
+.preview-bar{max-width:900px;margin:0 auto 10px;display:flex;justify-content:space-between;align-items:center;gap:8px;position:sticky;top:0;z-index:2;padding:9px 0;background:#050608}
+.preview-bar b{font-size:17px}.preview-img{display:block;width:min(100%,900px);height:auto;margin:0 auto;border-radius:10px;box-shadow:0 15px 60px rgba(0,0,0,.65)}
+.preview-actions{max-width:900px;margin:12px auto 0;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.home-hero{
+  position:relative;overflow:hidden;min-height:460px;margin-bottom:15px;padding:28px 20px 22px;
+  border:1px solid rgba(255,255,255,.10);border-radius:24px;
+  background:
+    linear-gradient(180deg,rgba(5,7,10,.10),rgba(5,7,10,.92) 72%),
+    radial-gradient(circle at 50% 25%,rgba(227,27,45,.20),transparent 34%),
+    linear-gradient(135deg,#11161d,#06080b 70%);
+  box-shadow:0 24px 60px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.04);
+}
+.home-hero:before{
+  content:"";position:absolute;inset:auto -15% -36% -15%;height:55%;
+  background:radial-gradient(ellipse,rgba(227,27,45,.20),transparent 60%);
+}
+.home-hero:after{
+  content:"";position:absolute;right:-70px;top:-80px;width:240px;height:240px;
+  border:2px solid rgba(227,27,45,.18);border-radius:50%;box-shadow:0 0 0 20px rgba(227,27,45,.035),0 0 0 42px rgba(227,27,45,.02);
+}
+.hero-logo{position:relative;z-index:2;display:block;width:min(520px,94%);max-height:220px;object-fit:contain;margin:0 auto 5px;background:#fff}
+.hero-kicker{position:relative;z-index:2;text-align:center;color:#aeb5bd;letter-spacing:.24em;font-size:10px;font-weight:800;margin:10px 0 18px}
+.hero-line{position:relative;z-index:2;height:2px;width:86px;background:var(--r);margin:0 auto 19px;box-shadow:0 0 18px rgba(227,27,45,.5)}
+.quick-grid{position:relative;z-index:3;display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:760px;margin:0 auto}
+.quick{
+  min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 17px;border-radius:15px;border:1px solid #343c46;
+  background:linear-gradient(145deg,rgba(28,33,40,.96),rgba(12,15,20,.98));
+  color:#fff;text-decoration:none;box-shadow:0 10px 24px rgba(0,0,0,.25);transition:.18s ease;
+}
+.quick:hover{transform:translateY(-2px);border-color:#626c78}
+.quick.primary-q{background:linear-gradient(145deg,#ff3345,#c80d1e);border-color:#ff5260}
+.quick b{font-size:15px}.quick small{display:block;color:#aeb5bd;margin-top:2px}.quick.primary-q small{color:#ffe1e4}
+.q-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:rgba(255,255,255,.08);font-size:20px}
+.quick.primary-q .q-icon{background:rgba(0,0,0,.16)}
+.quick .arrow{font-size:23px;color:#cdd2d8}
+.hero-foot{position:relative;z-index:2;text-align:center;margin-top:19px;color:#8f98a2;font-size:10px;letter-spacing:.25em;font-weight:750}
+.dashboard-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.dash-card{min-height:100px;display:flex;flex-direction:column;justify-content:space-between}
+.dash-card .accent{width:34px;height:3px;background:var(--r);margin-bottom:8px}
+@media(max-width:700px){
+  main{padding:12px 11px 34px}.top{padding:8px 10px 10px}
+  .brand{min-height:62px}.logoimg{width:min(330px,84vw);max-height:68px}
+  .grid,.g3,.dashboard-grid{grid-template-columns:1fr}.photos{grid-template-columns:repeat(3,1fr)}
+  .home-hero{min-height:auto;padding:22px 12px 17px;border-radius:20px}
+  .hero-logo{width:min(440px,96%);max-height:175px}.quick-grid{grid-template-columns:1fr;gap:9px}
+  .quick{min-height:68px}.nav{margin-bottom:12px}
+}
 @media print{.top,.nav,.np{display:none!important}body{background:#fff;color:#111}.card{background:#fff;border:0}.muted{color:#555}}
 </style>
 </head>
 <body>
 
-<header class="top"><div class="brand"><img class="logoimg" src="./logo-original.jpg?v=48" alt="Antonio Cars Service" decoding="async"></div></header>
+<header class="top"><div class="brand"><img class="logoimg" src="./logo-original.jpg?v=49" alt="Antonio Cars Service" decoding="async"></div></header>
 <main><nav class="nav np"><button data-t="home">Inicio</button><button data-t="new">Nueva OT</button><button data-t="budget">Nuevo presupuesto</button><button data-t="open">OT abiertas</button><button data-t="history">Historial</button><button data-t="clients">Clientes</button><button data-t="backup">Copia / Restaurar</button></nav><div id="app"></div></main>
 <div id="toast" class="hidden" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;padding:11px 15px;border-radius:9px;z-index:99999"></div>
 <script>
@@ -41,8 +156,27 @@ function go(t){document.querySelectorAll(".nav button").forEach(b=>b.classList.t
 document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>go(b.dataset.t));
 function card(o){return'<div class="item" onclick="view(\''+o.id+'\')"><b>'+esc(o.no)+"</b> · "+esc(o.plate)+' <span style="float:right">'+status(o.status)+'</span><div class="muted">'+esc(o.client?.name||"")+" · "+esc(o.vehicle?.make||"")+" "+esc(o.vehicle?.model||"")+" · "+fmt(o.created)+'</div><small>Total '+money(o.total)+"</small><div class=\"actions\" style=\"margin-top:8px\"><button class=\"btn\" type=\"button\" onclick=\"event.stopPropagation();deleteOT('"+o.id+"')\">Eliminar</button></div></div>"}
 
-function home(){$("#app").innerHTML='<div class="g3"><div class="card"><div class="muted">Total OT</div><div class="stat">'+db.ots.length+'</div></div><div class="card"><div class="muted">En reparación</div><div class="stat">'+db.ots.filter(x=>x.status=="En reparación").length+'</div></div><div class="card"><div class="muted">Listas</div><div class="stat">'+db.ots.filter(x=>x.status=="Listo").length+'</div></div></div><div class="card"><div class="actions np"><button class="btn primary" onclick="newOT()">＋ Nueva OT</button><button class="btn" onclick="newBudget()">＋ Nuevo presupuesto</button><button class="btn" onclick="go(\'history\')">Buscar patente</button></div></div><div class="card"><h3>Últimas OT</h3><div class="list">'+db.ots.slice(-8).reverse().map(card).join("")||'<div class="empty">No hay OT.</div>'+"</div></div>"}
-function fields(o){let c=o.client||{},v=o.vehicle||{};return'<div class="grid"><div class="card"><h3>Cliente</h3><label>Nombre<input id="name" value="'+esc(c.name)+'"></label><div class="grid"><label>RUT<input id="rut" value="'+esc(c.rut)+'"></label><label>Teléfono<input id="phone" value="'+esc(c.phone)+'"></label></div><label>Email<input id="email" value="'+esc(c.email)+'"></label><label>Dirección<input id="address" value="'+esc(c.address)+'"></label></div><div class="card"><h3>Vehículo</h3><div class="grid"><label>Patente *<input id="plate" maxlength="8" value="'+esc(o.plate)+'" oninput="loadPlate(this.value)"></label><label>Kilometraje<input id="km" type="number" value="'+esc(v.km)+'"></label></div><div class="grid"><label>Marca<input id="make" value="'+esc(v.make)+'"></label><label>Modelo<input id="model" value="'+esc(v.model)+'"></label></div><div class="grid"><label>Año<input id="year" value="'+esc(v.year)+'"></label><label>Color<input id="color" value="'+esc(v.color)+'"></label></div><label>Combustible<select id="fuel"><option></option>'+["Bencina","Diésel","Híbrido","Eléctrico","Otro"].map(x=>'<option '+(x==v.fuel?"selected":"")+'>'+x+"</option>").join("")+'</select></label><label>VIN / Chasis<input id="vin" value="'+esc(v.vin)+'"></label></div></div><div class="card"><h3>Recepción y diagnóstico</h3><div class="grid"><label>Motivo de ingreso<textarea id="reason">'+esc(o.reason)+'</textarea></label><label>Diagnóstico / trabajos<textarea id="diagnosis">'+esc(o.diagnosis)+'</textarea></label></div><div class="grid"><label>Observaciones de recepción<textarea id="reception">'+esc(o.reception)+'</textarea></label><label>Responsable / mecánico<input id="mechanic" value="'+esc(o.mechanic)+'"></label></div><div><label>Checklist</label>'+["Exterior revisado","Interior revisado","Luces/testigos registrados","Combustible registrado"].map((x,i)=>'<label><input type="checkbox" id="ch'+i+'" style="width:auto" '+(o.checks?.[i]?"checked":"")+'>'+x+"</label>").join("")+"</div></div>"}
+function home(){
+  $(" #app".trim()).innerHTML=
+    '<section class="home-hero">'+
+      '<img class="hero-logo" src="./logo-original.jpg?v=49" alt="Antonio Cars Service" decoding="async">'+
+      '<div class="hero-kicker">SERVICIO AUTOMOTRIZ · CHILE</div>'+
+      '<div class="hero-line"></div>'+
+      '<div class="quick-grid">'+
+        '<button class="quick primary-q" onclick="newOT()"><span class="q-icon">✚</span><span style="flex:1;text-align:left"><b>Nueva OT</b><small>Crear orden de trabajo</small></span><span class="arrow">›</span></button>'+
+        '<button class="quick" onclick="newBudget()"><span class="q-icon">▤</span><span style="flex:1;text-align:left"><b>Nuevo presupuesto</b><small>Preparar una cotización</small></span><span class="arrow">›</span></button>'+
+        '<button class="quick" onclick="go(\'open\')"><span class="q-icon">☷</span><span style="flex:1;text-align:left"><b>OT abiertas</b><small>Trabajos en curso</small></span><span class="arrow">›</span></button>'+
+        '<button class="quick" onclick="go(\'history\')"><span class="q-icon">⌕</span><span style="flex:1;text-align:left"><b>Historial</b><small>Buscar por patente o cliente</small></span><span class="arrow">›</span></button>'+
+      '</div>'+
+      '<div class="hero-foot">CALIDAD · CONFIANZA · SERVICIO</div>'+
+    '</section>'+
+    '<section class="dashboard-grid">'+
+      '<div class="card dash-card"><div><div class="accent"></div><div class="muted">Órdenes totales</div></div><div class="stat">'+db.ots.length+'</div></div>'+
+      '<div class="card dash-card"><div><div class="accent"></div><div class="muted">En reparación</div></div><div class="stat">'+db.ots.filter(x=>x.status=="En reparación").length+'</div></div>'+
+      '<div class="card dash-card"><div><div class="accent"></div><div class="muted">Listas</div></div><div class="stat">'+db.ots.filter(x=>x.status=="Listo").length+'</div></div>'+
+    '</section>'+
+    '<div class="card"><h3>Últimas OT</h3><div class="list">'+(db.ots.slice(-8).reverse().map(card).join("")||'<div class="empty">No hay OT todavía.</div>')+'</div></div>';
+}function fields(o){let c=o.client||{},v=o.vehicle||{};return'<div class="grid"><div class="card"><h3>Cliente</h3><label>Nombre<input id="name" value="'+esc(c.name)+'"></label><div class="grid"><label>RUT<input id="rut" value="'+esc(c.rut)+'"></label><label>Teléfono<input id="phone" value="'+esc(c.phone)+'"></label></div><label>Email<input id="email" value="'+esc(c.email)+'"></label><label>Dirección<input id="address" value="'+esc(c.address)+'"></label></div><div class="card"><h3>Vehículo</h3><div class="grid"><label>Patente *<input id="plate" maxlength="8" value="'+esc(o.plate)+'" oninput="loadPlate(this.value)"></label><label>Kilometraje<input id="km" type="number" value="'+esc(v.km)+'"></label></div><div class="grid"><label>Marca<input id="make" value="'+esc(v.make)+'"></label><label>Modelo<input id="model" value="'+esc(v.model)+'"></label></div><div class="grid"><label>Año<input id="year" value="'+esc(v.year)+'"></label><label>Color<input id="color" value="'+esc(v.color)+'"></label></div><label>Combustible<select id="fuel"><option></option>'+["Bencina","Diésel","Híbrido","Eléctrico","Otro"].map(x=>'<option '+(x==v.fuel?"selected":"")+'>'+x+"</option>").join("")+'</select></label><label>VIN / Chasis<input id="vin" value="'+esc(v.vin)+'"></label></div></div><div class="card"><h3>Recepción y diagnóstico</h3><div class="grid"><label>Motivo de ingreso<textarea id="reason">'+esc(o.reason)+'</textarea></label><label>Diagnóstico / trabajos<textarea id="diagnosis">'+esc(o.diagnosis)+'</textarea></label></div><div class="grid"><label>Observaciones de recepción<textarea id="reception">'+esc(o.reception)+'</textarea></label><label>Responsable / mecánico<input id="mechanic" value="'+esc(o.mechanic)+'"></label></div><div><label>Checklist</label>'+["Exterior revisado","Interior revisado","Luces/testigos registrados","Combustible registrado"].map((x,i)=>'<label><input type="checkbox" id="ch'+i+'" style="width:auto" '+(o.checks?.[i]?"checked":"")+'>'+x+"</label>").join("")+"</div></div>"}
 function newBudget(){edit={id:"",no:"",created:new Date().toISOString(),status:"Pendiente",items:[],photos:[],checks:[],mode:"presupuesto"};newOT(edit)}
 function deleteOT(id){let o=db.ots.find(x=>x.id===id);if(!o)return;let tipo=o.mode=="presupuesto"?"presupuesto":"OT";if(!confirm("¿Eliminar "+tipo+" "+o.no+"? Esta acción no se puede deshacer."))return;db.ots=db.ots.filter(x=>x.id!==id);save();edit=null;toast(tipo+" eliminado");setTimeout(()=>go("home"),250)}
 function editOT(id){let o=db.ots.find(x=>x.id===id);if(o)newOT(o);else toast("Documento no encontrado")}
