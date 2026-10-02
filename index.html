@@ -182,7 +182,7 @@ textarea{min-height:82px;resize:vertical}
 </style></head>
 <body>
 
-<header class="top"><div class="brand"><img class="logoimg" src="./logo-original.jpg?v=49" alt="Antonio Cars Service" decoding="async"></div></header>
+<header class="top"><div class="brand"><img class="logoimg" src="./logo.svg" alt="Antonio Cars Service" decoding="async"></div></header>
 <main><nav class="nav np"><button data-t="home">Inicio</button><button data-t="new">Nueva OT</button><button data-t="budget">Nuevo presupuesto</button><button data-t="open">OT abiertas</button><button data-t="history">Historial</button><button data-t="clients">Clientes</button><button data-t="backup">Copia / Restaurar</button></nav><div id="app"></div></main>
 <div id="toast" class="hidden" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;padding:11px 15px;border-radius:9px;z-index:99999"></div>
 <script>
@@ -203,7 +203,7 @@ function card(o){return'<div class="item" onclick="view(\''+o.id+'\')"><b>'+esc(
 function home(){
   $(" #app".trim()).innerHTML=
     '<section class="home-hero">'+
-      '<img class="hero-logo" src="./logo-original.jpg?v=49" alt="Antonio Cars Service" decoding="async">'+
+      '<img class="hero-logo" src="./logo.svg" alt="Antonio Cars Service" decoding="async">'+
       '<div class="hero-kicker">SERVICIO AUTOMOTRIZ · CHILE</div>'+
       '<div class="hero-line"></div>'+
       '<div class="quick-grid">'+
@@ -311,7 +311,7 @@ ctx.closePath();ctx.fill();
 ctx.beginPath();ctx.moveTo(x-11,y+13);ctx.lineTo(x-19,y+21);ctx.lineTo(x-7,y+17);ctx.fill();
 ctx.restore();
 }
-const logo=new Image();let logoReady;logoReady=new Promise(resolve=>{let done=false;const finish=()=>{if(done)return;done=true;resolve()};logo.onload=finish;logo.onerror=finish;logo.src="./logo-original.jpg?v=51";});
+const logo=new Image();let logoReady;logoReady=new Promise(resolve=>{let done=false;const finish=()=>{if(done)return;done=true;resolve()};logo.onload=finish;logo.onerror=finish;logo.src="./logo.svg";});
 const photoImages=photos.map(p=>{const im=new Image();im.src=typeof p==="string"?p:(p?.data||"");return im});
 const photoReady=Promise.all(photoImages.map(im=>new Promise(r=>{if(im.complete)return r();im.onload=r;im.onerror=r})));
 const clientReady=new Promise(r=>{clientImg.onload=r;clientImg.onerror=r});const vehicleReady=new Promise(r=>{vehicleImg.onload=r;vehicleImg.onerror=r});await Promise.all([logoReady,clientReady,vehicleReady,photoReady]);const hasLogo=logo.complete&&logo.naturalWidth;
