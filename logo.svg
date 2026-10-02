@@ -1,26 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
 <defs>
- <linearGradient id="metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff"/><stop offset=".45" stop-color="#b9bcc1"/><stop offset=".7" stop-color="#f7f7f7"/><stop offset="1" stop-color="#777"/></linearGradient>
- <linearGradient id="dark" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#161616"/><stop offset="1" stop-color="#000"/></linearGradient>
- <filter id="shadow"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity=".55"/></filter>
+<linearGradient id="silver" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff"/><stop offset=".45" stop-color="#c8cbd0"/><stop offset=".75" stop-color="#f5f5f5"/><stop offset="1" stop-color="#777"/></linearGradient>
+<filter id="s"><feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#000" flood-opacity=".55"/></filter>
 </defs>
-<circle cx="500" cy="500" r="470" fill="#050505" stroke="url(#metal)" stroke-width="34" filter="url(#shadow)"/>
-<circle cx="500" cy="500" r="438" fill="none" stroke="#e21b23" stroke-width="10"/>
-<path d="M130 350 L160 300 L205 335 L230 270 L285 300 L320 240 L375 275 L420 220 L470 260 L500 200 L530 260 L580 220 L625 275 L680 240 L715 300 L770 270 L795 335 L840 300 L870 350" fill="none" stroke="#aeb2b7" stroke-width="28" stroke-linejoin="round"/>
-<path d="M160 390 Q280 275 500 285 Q720 275 840 390 L800 410 Q690 335 500 340 Q310 335 200 410 Z" fill="url(#dark)" stroke="url(#metal)" stroke-width="9"/>
-<path d="M190 430 Q300 350 485 365 Q650 350 810 425 L850 455 L785 455 L735 438 Q680 420 620 420 L370 420 Q290 420 215 460 L170 470 Z" fill="none" stroke="#f4f4f4" stroke-width="12" stroke-linejoin="round"/>
-<path d="M245 458 Q310 420 370 420 M635 420 Q710 420 775 455" fill="none" stroke="#ed1c24" stroke-width="11"/>
-<path d="M355 420 L405 365 L560 365 L620 420" fill="none" stroke="#fff" stroke-width="9"/>
-<circle cx="330" cy="465" r="38" fill="#080808" stroke="#ddd" stroke-width="9"/><circle cx="700" cy="465" r="38" fill="#080808" stroke="#ddd" stroke-width="9"/>
-<text x="500" y="575" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-size="150" font-weight="900" font-style="italic" fill="url(#metal)" letter-spacing="-7">ANTONIO</text>
-<text x="500" y="660" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-size="67" font-weight="900" font-style="italic" fill="#ed1c24">CARS <tspan fill="#f4f4f4">SERVICE</tspan></text>
-<path d="M180 695 H820" stroke="#ed1c24" stroke-width="7"/>
-<text x="500" y="750" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="29" font-weight="700" fill="#fff" letter-spacing="5">TU VEHÍCULO EN BUENAS MANOS</text>
-<path d="M285 795 L365 795 M635 795 L715 795" stroke="#ed1c24" stroke-width="7"/>
-<g transform="translate(500 795)" stroke="url(#metal)" stroke-width="15" stroke-linecap="round" fill="none">
- <path d="M-18 15 L45 78"/><path d="M18 15 L-45 78"/>
- <path d="M-18 15 Q-35 5 -30 -18 L-8 -40 L10 -22 L-3 -9"/>
- <path d="M18 15 Q35 5 30 -18 L8 -40 L-10 -22 L3 -9"/>
- <circle cx="45" cy="78" r="10"/><circle cx="-45" cy="78" r="10"/>
+<rect width="1000" height="1000" fill="#fff"/>
+<g filter="url(#s)">
+<path d="M160 360 L190 300 L245 325 L270 260 L330 285 L365 225 L425 255 L460 195 L500 245 L540 195 L575 255 L635 225 L670 285 L730 260 L755 325 L810 300 L840 360 L875 350 L850 420 L150 420 L125 350Z" fill="url(#silver)" stroke="#333" stroke-width="10"/>
+<path d="M180 355 Q500 125 820 355" fill="none" stroke="#f01822" stroke-width="24"/>
+<path d="M170 445 Q285 315 430 325 L555 330 Q665 335 820 425 L865 465 L790 470 Q750 430 685 415 L345 415 Q260 425 195 480Z" fill="#111" stroke="#fff" stroke-width="10"/>
+<path d="M250 395 Q350 310 460 335 L535 405" fill="none" stroke="#fff" stroke-width="12"/>
+<path d="M555 405 Q650 330 760 405" fill="none" stroke="#fff" stroke-width="12"/>
+<path d="M175 458 Q260 415 355 420" fill="none" stroke="#f01822" stroke-width="13"/>
+<path d="M650 420 Q735 420 820 458" fill="none" stroke="#fff" stroke-width="9"/>
+<circle cx="300" cy="470" r="48" fill="#111" stroke="#aaa" stroke-width="12"/><circle cx="715" cy="470" r="48" fill="#111" stroke="#aaa" stroke-width="12"/>
+</g>
+<text x="500" y="590" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-size="145" font-weight="900" font-style="italic" fill="url(#silver)" stroke="#222" stroke-width="5" paint-order="stroke" letter-spacing="-6">ANTONIO</text>
+<text x="500" y="680" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-size="70" font-weight="900" font-style="italic" fill="#f01822" stroke="#111" stroke-width="3" paint-order="stroke">CARS <tspan fill="#fff" stroke="#111">SERVICE</tspan></text>
+<rect x="105" y="705" width="790" height="8" fill="#f01822"/>
+<rect x="105" y="725" width="790" height="4" fill="#222"/>
+<text x="500" y="785" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="30" font-weight="700" fill="#222" letter-spacing="5">TU VEHÍCULO EN BUENAS MANOS</text>
+<path d="M105 780 H175 M825 780 H895" stroke="#f01822" stroke-width="8"/>
+<path d="M380 855 H455 M545 855 H620" stroke="#f01822" stroke-width="8"/>
+<g transform="translate(500 855)" stroke="url(#silver)" stroke-width="17" stroke-linecap="round" fill="none" filter="url(#s)">
+<path d="M-15 15 L48 78"/><path d="M15 15 L-48 78"/>
+<path d="M-15 15 Q-32 5 -27 -17 L-7 -38 L11 -20 L-3 -7"/>
+<path d="M15 15 Q32 5 27 -17 L7 -38 L-11 -20 L3 -7"/>
+<circle cx="48" cy="78" r="10"/><circle cx="-48" cy="78" r="10"/>
 </g>
 </svg>
