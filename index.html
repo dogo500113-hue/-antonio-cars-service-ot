@@ -10,7 +10,7 @@
 :root{--r:#e21b2d;--r2:#ff3345;--bg:#07080a;--c:#14161a;--l:#30343a;--m:#a7abb1;--w:#fff}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--w);font:15px system-ui,-apple-system,BlinkMacSystemFont,sans-serif}
 button,input,select,textarea{font:inherit}button{cursor:pointer}.top{padding:12px 15px;background:#090a0c;border-bottom:1px solid #292c31;position:sticky;top:0;z-index:3}
-.brand{display:flex;align-items:center;justify-content:center;width:100%;overflow:hidden}.logoimg{width:min(560px,96vw);height:auto;max-height:220px;border-radius:0;object-fit:contain;object-position:center;background:#fff;padding:0;margin:0 auto;display:block;flex:0 1 auto;image-rendering:auto}.muted{color:var(--m)}
+.brand{display:flex;align-items:center;justify-content:center;width:100%;overflow:hidden}.logoimg{width:min(600px,96vw);height:auto;max-height:250px;border-radius:0;object-fit:contain;object-position:center;background:#fff;padding:0;margin:0 auto;display:block;flex:0 1 auto;image-rendering:auto}.muted{color:var(--m)}
 main{max-width:1050px;margin:auto;padding:14px}.nav{display:flex;gap:7px;overflow:auto;margin-bottom:14px}.nav button,.btn{border:1px solid var(--l);background:var(--c);color:#fff;border-radius:9px;padding:10px 12px;white-space:nowrap}.nav .on,.primary{background:var(--r);border-color:var(--r)}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{background:var(--c);border:1px solid var(--l);border-radius:14px;padding:14px;margin-bottom:12px}
 .stat{font-size:27px;font-weight:800}label{display:block;font-size:12px;color:#ddd;margin-bottom:9px}input,select,textarea{width:100%;background:#101216;color:#fff;border:1px solid var(--l);border-radius:8px;padding:10px;margin-top:5px}textarea{min-height:75px}
@@ -23,7 +23,7 @@ main{max-width:1050px;margin:auto;padding:14px}.nav{display:flex;gap:7px;overflo
 </head>
 <body>
 
-<header class="top"><div class="brand"><img class="logoimg" src="./logo.svg?v=47" alt="Antonio Cars Service" decoding="async"></div></header>
+<header class="top"><div class="brand"><img class="logoimg" src="./logo-original.jpg?v=48" alt="Antonio Cars Service" decoding="async"></div></header>
 <main><nav class="nav np"><button data-t="home">Inicio</button><button data-t="new">Nueva OT</button><button data-t="budget">Nuevo presupuesto</button><button data-t="open">OT abiertas</button><button data-t="history">Historial</button><button data-t="clients">Clientes</button><button data-t="backup">Copia / Restaurar</button></nav><div id="app"></div></main>
 <div id="toast" class="hidden" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;padding:11px 15px;border-radius:9px;z-index:99999"></div>
 <script>
@@ -133,7 +133,7 @@ ctx.closePath();ctx.fill();
 ctx.beginPath();ctx.moveTo(x-11,y+13);ctx.lineTo(x-19,y+21);ctx.lineTo(x-7,y+17);ctx.fill();
 ctx.restore();
 }
-const logo=new Image();let logoReady;logoReady=new Promise(resolve=>{let done=false;const finish=()=>{if(done)return;done=true;resolve()};logo.onload=finish;logo.onerror=finish;logo.src="./logo-definitivo.jpg?v=45";});const clientReady=new Promise(r=>{clientImg.onload=r;clientImg.onerror=r});const vehicleReady=new Promise(r=>{vehicleImg.onload=r;vehicleImg.onerror=r});await Promise.all([logoReady,clientReady,vehicleReady]);const hasLogo=logo.complete&&logo.naturalWidth;
+const logo=new Image();let logoReady;logoReady=new Promise(resolve=>{let done=false;const finish=()=>{if(done)return;done=true;resolve()};logo.onload=finish;logo.onerror=finish;logo.src="./logo-original.jpg?v=48";});const clientReady=new Promise(r=>{clientImg.onload=r;clientImg.onerror=r});const vehicleReady=new Promise(r=>{vehicleImg.onload=r;vehicleImg.onerror=r});await Promise.all([logoReady,clientReady,vehicleReady]);const hasLogo=logo.complete&&logo.naturalWidth;
 const headerH=276;
 ctx.fillStyle="#f4f6f7";ctx.fillRect(0,0,W,headerH);
 const car=new Image();car.crossOrigin="anonymous";car.src="https://images.unsplash.com/photo-1767681092416-bccf9410bda4?auto=format&fit=crop&fm=jpg&q=80&w=1400";
