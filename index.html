@@ -45,8 +45,37 @@ function fields(o){let c=o.client||{},v=o.vehicle||{};return'<div class="grid"><
 function newBudget(){edit={id:"",no:"",created:new Date().toISOString(),status:"Pendiente",items:[],photos:[],checks:[],mode:"presupuesto"};newOT(edit)}
 function deleteOT(id){let o=db.ots.find(x=>x.id===id);if(!o)return;let tipo=o.mode=="presupuesto"?"presupuesto":"OT";if(!confirm("¿Eliminar "+tipo+" "+o.no+"? Esta acción no se puede deshacer."))return;db.ots=db.ots.filter(x=>x.id!==id);save();edit=null;toast(tipo+" eliminado");setTimeout(()=>go("home"),250)}
 function editOT(id){let o=db.ots.find(x=>x.id===id);if(o)newOT(o);else toast("Documento no encontrado")}
-function newOT(o){invalidateShareCache();if(o)edit=o;else edit={id:"",no:"",created:new Date().toISOString(),status:"Ingresado",items:[],photos:[],checks:[]};$("#app").innerHTML='<div class="card"><h2>'+(edit.mode=="presupuesto"?"Presupuesto ":"Orden de Trabajo ")+(edit.no?esc(edit.no):"Nuevo · sin número")+"</h2><div class="muted">'+fmt(edit.created)+'</div></div>'+fields(edit)+'<div class="card"><h3>Repuestos y mano de obra</h3><div id="items"></div><div class="actions np"><button class="btn primary" onclick="item(\'part\')">＋ Agregar repuesto</button><button class="btn primary" onclick="item(\'labor\')">＋ Agregar mano de obra</button></div><div id="total" class="total"></div></div><div class="card"><h3>Fotos de recepción</h3><input class="np" type="file" accept="image/*" multiple onchange="addPhotos(event)"><div id="photos" class="photos"></div></div><div class="card"><h3>Estado</h3><select id="status">'+["Ingresado","Diagnóstico","Esperando aprobación","En reparación","Listo","Entregado"].map(x=>'<option '+(x==edit.status?"selected":"")+'>'+x+"</option>").join("")+'</select><label>Observaciones finales<textarea id="obs">'+esc(edit.obs)+'</textarea></label></div><div class="actions np"><button class="btn primary" onclick="saveOT()">Guardar '+(edit.mode=="presupuesto"?"presupuesto":"OT")+'</button><button class="btn" onclick="go(\'home\')">Cancelar</button></div>';drawItems();drawPhotos()}
-function val(id){return $("#"+id)?.value||""}
+function newOT(o){
+ invalidateShareCache();
+ if(o) edit=o;
+ else edit={id:"",no:"",created:new Date().toISOString(),status:"Ingresado",items:[],photos:[],checks:[]};
+ const title=edit.mode=="presupuesto"?"Presupuesto ":"Orden de Trabajo ";
+ const number=edit.no?esc(edit.no):"Nuevo · sin número";
+ $("#app").innerHTML=`
+  <div class="card"><h2>${title}${number}</h2><div class="muted">${fmt(edit.created)}</div></div>
+  ${fields(edit)}
+  <div class="card"><h3>Repuestos y mano de obra</h3><div id="items"></div>
+    <div class="actions np">
+      <button class="btn primary" onclick="item('part')">＋ Agregar repuesto</button>
+      <button class="btn primary" onclick="item('labor')">＋ Agregar mano de obra</button>
+    </div>
+    <div id="total" class="total"></div>
+  </div>
+  <div class="card"><h3>Fotos de recepción</h3>
+    <input class="np" type="file" accept="image/*" multiple onchange="addPhotos(event)">
+    <div id="photos" class="photos"></div>
+  </div>
+  <div class="card"><h3>Estado</h3>
+    <select id="status">${["Ingresado","Diagnóstico","Esperando aprobación","En reparación","Listo","Entregado"].map(x=>`<option ${x==edit.status?"selected":""}>${x}</option>`).join("")}</select>
+    <label>Observaciones finales<textarea id="obs">${esc(edit.obs)}</textarea></label>
+  </div>
+  <div class="actions np">
+    <button class="btn primary" onclick="saveOT()">Guardar ${edit.mode=="presupuesto"?"presupuesto":"OT"}</button>
+    <button class="btn" onclick="go('home')">Cancelar</button>
+  </div>`;
+ drawItems();
+ drawPhotos();
+}function val(id){return $("#"+id)?.value||""}
 function loadPlate(p){let v=db.vehicles[plate(p)];if(!v)return;let c=db.clients[v.ck]||{};Object.keys(v).filter(k=>k!="ck").forEach(k=>{if($("#"+k))$("#"+k).value=v[k]});[["name","name"],["rut","rut"],["phone","phone"],["email","email"],["address","address"]].forEach(([a,b])=>{if(c[b]&&$("#"+a))$("#"+a).value=c[b]})}
 function item(t){edit.items=edit.items||[];edit.items.push({type:t,desc:"",qty:1,price:0});drawItems();persistCurrentOT();setTimeout(()=>{let a=document.querySelectorAll("#items input.desc");a[a.length-1]?.focus()},50)}
 function drawItems(){let a=edit.items||[],parts=a.filter(x=>x.type=="part"),labor=a.filter(x=>x.type=="labor");const section=(title,type,arr)=>'<div class="card" style="margin:10px 0;background:#101014"><div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><b>'+title+'</b><button type="button" class="btn" data-add-type="'+type+'">＋ Agregar</button></div>'+(arr.length?arr.map(x=>{let i=a.indexOf(x);return'<div class="line-item" data-i="'+i+'" style="padding:10px 0;border-bottom:1px solid var(--l)"><div class="grid" style="grid-template-columns:2fr .7fr 1fr auto;align-items:end"><label>Descripción<input class="desc" data-i="'+i+'" value="'+esc(x.desc||"")+'" placeholder="'+(type=="part"?"Ej: Filtro de aceite":"Ej: Cambio de aceite")+'"></label><label>Cantidad<input class="qty" data-i="'+i+'" type="number" min="1" value="'+(x.qty||1)+'"></label><label>Precio unitario<input class="price" data-i="'+i+'" type="number" min="0" value="'+(x.price||0)+'"></label><button type="button" class="btn del-item" data-i="'+i+'">×</button></div><div class="muted subtotal" style="text-align:right">Subtotal: '+money((x.qty||1)*(x.price||0))+'</div></div>'}).join(""):'<div class="muted" style="padding:10px 0">No hay '+(type=="part"?"repuestos":"mano de obra")+' agregados.</div>')+'</div>';$("#items").innerHTML=section("Repuestos","part",parts)+section("Mano de obra","labor",labor);$("#items").querySelectorAll("[data-add-type]").forEach(el=>el.addEventListener("click",()=>item(el.dataset.addType)));$("#items").querySelectorAll("input.desc").forEach(el=>el.addEventListener("input",e=>{let i=+e.target.dataset.i;edit.items[i].desc=e.target.value;persistCurrentOT();drawItemTotals()}));$("#items").querySelectorAll("input.qty").forEach(el=>el.addEventListener("input",e=>{let i=+e.target.dataset.i;edit.items[i].qty=+e.target.value||1;persistCurrentOT();drawItemTotals()}));$("#items").querySelectorAll("input.price").forEach(el=>el.addEventListener("input",e=>{let i=+e.target.dataset.i;edit.items[i].price=+e.target.value||0;persistCurrentOT();drawItemTotals()}));$("#items").querySelectorAll(".del-item").forEach(el=>el.addEventListener("click",e=>{let i=+e.currentTarget.dataset.i;edit.items.splice(i,1);persistCurrentOT();drawItems()}));drawItemTotals()}
