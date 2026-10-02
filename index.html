@@ -279,7 +279,7 @@ async function getBudgetBlob(){const key=edit?.id+"|"+(edit?.updated||edit?.crea
 async function makeBudgetImage(){
 const o=edit;if(!o)return null;
 const all=o.items||[],parts=all.filter(x=>x.type=="part"),labor=all.filter(x=>x.type=="labor");
-const W=1024,rowH=44,extra=Math.max(0,parts.length-4)*rowH+Math.max(0,labor.length-3)*rowH+all.length*18;
+const W=1024,rowH=44,photos=o.photos||[],photoRows=Math.ceil(photos.length/3),photoExtra=photos.length?96+photoRows*190:0,extra=Math.max(0,parts.length-4)*rowH+Math.max(0,labor.length-3)*rowH+all.length*18+photoExtra;
 const H=1536+extra,c=document.createElement("canvas"),ctx=c.getContext("2d");c.width=W;c.height=H;
 const WHITE="#f6f7f8",PANEL="#fff",INK="#182028",MUTED="#5f6870",LINE="#d8dde2",RED="#c91f2d",DARK="#10161b";
 ctx.fillStyle=WHITE;ctx.fillRect(0,0,W,H);
@@ -311,7 +311,10 @@ ctx.closePath();ctx.fill();
 ctx.beginPath();ctx.moveTo(x-11,y+13);ctx.lineTo(x-19,y+21);ctx.lineTo(x-7,y+17);ctx.fill();
 ctx.restore();
 }
-const logo=new Image();let logoReady;logoReady=new Promise(resolve=>{let done=false;const finish=()=>{if(done)return;done=true;resolve()};logo.onload=finish;logo.onerror=finish;logo.src="./logo-original.jpg?v=51";});const clientReady=new Promise(r=>{clientImg.onload=r;clientImg.onerror=r});const vehicleReady=new Promise(r=>{vehicleImg.onload=r;vehicleImg.onerror=r});await Promise.all([logoReady,clientReady,vehicleReady]);const hasLogo=logo.complete&&logo.naturalWidth;
+const logo=new Image();let logoReady;logoReady=new Promise(resolve=>{let done=false;const finish=()=>{if(done)return;done=true;resolve()};logo.onload=finish;logo.onerror=finish;logo.src="./logo-original.jpg?v=51";});
+const photoImages=photos.map(p=>{const im=new Image();im.src=typeof p==="string"?p:(p?.data||"");return im});
+const photoReady=Promise.all(photoImages.map(im=>new Promise(r=>{if(im.complete)return r();im.onload=r;im.onerror=r})));
+const clientReady=new Promise(r=>{clientImg.onload=r;clientImg.onerror=r});const vehicleReady=new Promise(r=>{vehicleImg.onload=r;vehicleImg.onerror=r});await Promise.all([logoReady,clientReady,vehicleReady,photoReady]);const hasLogo=logo.complete&&logo.naturalWidth;
 const headerH=276;
 ctx.fillStyle="#f4f6f7";ctx.fillRect(0,0,W,headerH);
 const car=new Image();car.crossOrigin="anonymous";car.src="https://images.unsplash.com/photo-1767681092416-bccf9410bda4?auto=format&fit=crop&fm=jpg&q=80&w=1400";
@@ -378,6 +381,13 @@ return sum
 const sp=table("REPUESTOS",parts,false),sl=table("MANO DE OBRA",labor,true),total=sp+sl;
 panel(28,y,468,118,10);ctx.fillStyle=RED;ctx.fillRect(48,y+18,3,24);txt("RESUMEN",66,y+34,16,"700",INK);line(48,y+43,476,y+43,1,LINE);txt("Repuestos",48,y+69,14,"500",MUTED);txt(moneyLocal(sp),476,y+69,14,"700",INK,"right");txt("Mano de obra",48,y+92,14,"500",MUTED);txt(moneyLocal(sl),476,y+92,14,"700",INK,"right");ctx.fillStyle=RED;ctx.fillRect(28,y+96,468,42);txt(title=="PRESUPUESTO"?"TOTAL PRESUPUESTO":"TOTAL",48,y+123,16,"800","#fff");txt(moneyLocal(total),476,y+123,18,"800","#fff","right");
 panel(528,y,468,118,10);ctx.fillStyle=RED;ctx.fillRect(548,y+18,3,24);txt("NOTAS",566,y+34,16,"700",INK);line(548,y+43,976,y+43,1,LINE);const notes=wrap(o.obs||"Gracias por confiar en Antonio Cars Service.",400);notes.slice(0,3).forEach((s,i)=>txt(s,548,y+70+i*21,14,"500",MUTED));y+=143;
+if(photos.length){
+  panel(28,y,968,62+photoRows*190,10);
+  ctx.fillStyle=RED;ctx.fillRect(48,y+18,3,24);txt("FOTOGRAFÍAS DEL VEHÍCULO",66,y+35,16,"700",INK);
+  const gap=14,cellW=(920-gap*2)/3,cellH=168,startY=y+52;
+  photoImages.forEach((im,i)=>{if(!im.naturalWidth)return;const col=i%3,row=Math.floor(i/3),x=48+col*(cellW+gap),py=startY+row*190;ctx.save();ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x,py,cellW,cellH,8);else ctx.rect(x,py,cellW,cellH);ctx.clip();const sc=Math.max(cellW/im.naturalWidth,cellH/im.naturalHeight),iw=im.naturalWidth*sc,ih=im.naturalHeight*sc;ctx.drawImage(im,x+(cellW-iw)/2,py+(cellH-ih)/2,iw,ih);ctx.restore();ctx.strokeStyle=LINE;ctx.lineWidth=1;ctx.strokeRect(x,py,cellW,cellH);});
+  y+=62+photoRows*190+10;
+}
 const footerH=190,footY=Math.max(y+8,H-footerH);
 if(footY>y){ctx.fillStyle=WHITE;ctx.fillRect(0,y,W,footY-y)}
 ctx.fillStyle=DARK;ctx.fillRect(0,footY,W,H-footY);ctx.fillStyle=RED;ctx.fillRect(0,footY,W,3);
