@@ -28,7 +28,8 @@ main{max-width:1050px;margin:auto;padding:14px}.nav{display:flex;gap:7px;overflo
 <div id="toast" class="hidden" style="position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#222;padding:11px 15px;border-radius:9px;z-index:99999"></div>
 <script>
 const S="acs_ot_v2",$=s=>document.querySelector(s),esc=s=>String(s??"").replace(/[&<>"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m])),money=n=>new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",maximumFractionDigits:0}).format(+n||0);
-let db=JSON.parse(localStorage.getItem(S)||'{"seq":0,"ots":[],"clients":{},"vehicles":{}}'),edit=null;
+let db;try{db=JSON.parse(localStorage.getItem(S)||'{"seq":0,"ots":[],"clients":{},"vehicles":{}}');if(!db||typeof db!=="object"||!Array.isArray(db.ots))throw 0;if(!db.clients)db.clients={};if(!db.vehicles)db.vehicles={};if(typeof db.seq!=="number")db.seq=0}catch(e){db={seq:0,ots:[],clients:{},vehicles:{}};try{localStorage.setItem(S,JSON.stringify(db))}catch(_){}}
+let edit=null;
 function save(){localStorage.setItem(S,JSON.stringify(db))}
 function toast(x){let t=$("#toast");t.textContent=x;t.classList.remove("hidden");setTimeout(()=>t.classList.add("hidden"),1900)}
 function nextNo(prefix){db.seq++;return prefix+"-"+String(db.seq).padStart(6,"0")}
@@ -221,6 +222,6 @@ function backup(){$("#app").innerHTML='<div class="card"><h2>Copia / Restaurar</
 function download(){let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:"application/json"}));a.download="antonio-cars-service-respaldo.json";a.click()}
 function restore(e){let r=new FileReader;r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.ots)throw 0;db=x;save();home();toast("Respaldo restaurado")}catch{toast("Archivo no válido")}};r.readAsText(e.target.files[0])}
 go("home");
-if("serviceWorker"in navigator)navigator.serviceWorker.register("./sw.js?v=41",{updateViaCache:"none"}).then(r=>r.update()).catch(()=>{});
+if("serviceWorker"in navigator){navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister())).catch(()=>{});if(window.caches)caches.keys().then(ks=>ks.forEach(k=>caches.delete(k))).catch(()=>{})}
 </script>
 </body></html>
