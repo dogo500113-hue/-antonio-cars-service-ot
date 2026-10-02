@@ -68,7 +68,7 @@ const o=edit;if(!o)return null;
 const all=o.items||[],parts=all.filter(x=>x.type=="part"),labor=all.filter(x=>x.type=="labor");
 const W=1024,rowH=44,extra=Math.max(0,parts.length-4)*rowH+Math.max(0,labor.length-3)*rowH+all.length*18;
 const H=1536+extra,c=document.createElement("canvas"),ctx=c.getContext("2d");c.width=W;c.height=H;
-const WHITE="#f6f7f8",PANEL="#fff",INK="#182028",MUTED="#5f6870",LINE="#d8dde2",RED="#e51b2b",DARK="#10161b";
+const WHITE="#f6f7f8",PANEL="#fff",INK="#182028",MUTED="#5f6870",LINE="#d8dde2",RED="#c91f2d",DARK="#10161b";
 ctx.fillStyle=WHITE;ctx.fillRect(0,0,W,H);
 function line(x1,y1,x2,y2,w=1,color=LINE){ctx.strokeStyle=color;ctx.lineWidth=w;ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke()}
 function panel(x,y,w,h,r=12,fill=PANEL){ctx.fillStyle=fill;ctx.strokeStyle=LINE;ctx.lineWidth=1;ctx.beginPath();if(ctx.roundRect)ctx.roundRect(x,y,w,h,r);else ctx.rect(x,y,w,h);ctx.fill();ctx.stroke()}
@@ -98,7 +98,7 @@ ctx.closePath();ctx.fill();
 ctx.beginPath();ctx.moveTo(x-11,y+13);ctx.lineTo(x-19,y+21);ctx.lineTo(x-7,y+17);ctx.fill();
 ctx.restore();
 }
-const logo=new Image();logo.src="./logo.jpg?v=29";logo.onerror=()=>{logo.src="./logo.png?v=29"};await Promise.all([new Promise(r=>{logo.onload=r;logo.onerror=r}),new Promise(r=>{clientImg.onload=r;clientImg.onerror=r}),new Promise(r=>{vehicleImg.onload=r;vehicleImg.onerror=r})]);const hasLogo=logo.complete&&logo.naturalWidth;
+const logo=new Image();logo.src="./logo.png?v=30";logo.onerror=()=>{logo.src="./logo-clean.png?v=30"};await Promise.all([new Promise(r=>{logo.onload=r;logo.onerror=r}),new Promise(r=>{clientImg.onload=r;clientImg.onerror=r}),new Promise(r=>{vehicleImg.onload=r;vehicleImg.onerror=r})]);const hasLogo=logo.complete&&logo.naturalWidth;
 const headerH=276;
 ctx.fillStyle="#f4f6f7";ctx.fillRect(0,0,W,headerH);
 const car=new Image();car.crossOrigin="anonymous";car.src="https://images.unsplash.com/photo-1767681092416-bccf9410bda4?auto=format&fit=crop&fm=jpg&q=80&w=1400";
@@ -122,7 +122,7 @@ txt("Tu vehículo",714,184,25,"700","#fff");txt("en buenas manos",714,215,27,"70
 ctx.fillStyle=DARK;ctx.fillRect(0,230,W,46);
 txt("MECÁNICA GENERAL",145,259,15,"700","#fff","center");line(290,242,290,266,1,RED);txt("DIAGNÓSTICO",510,259,15,"700","#fff","center");line(655,242,655,266,1,RED);txt("MANTENCIÓN",830,259,15,"700","#fff","center");
 let y=292;const title=o.mode=="presupuesto"?"PRESUPUESTO":"ORDEN DE TRABAJO";
-panel(28,y,968,86,12,"#fff");ctx.fillStyle=RED;ctx.beginPath();ctx.roundRect(42,y+13,58,60,9);ctx.fill();iconDoc(71,y+43);txt(title,126,y+37,27,"800",INK);txt("N° "+(o.no||""),126,y+67,20,"700",RED);line(605,y+18,605,y+68,1,LINE);txt("Fecha",630,y+31,13,"700",MUTED);txt(fmt(o.created||new Date()).split(",")[0],630,y+57,17,"600",INK);line(775,y+18,775,y+68,1,LINE);txt("Estado",800,y+31,13,"700",MUTED);txt(o.status||"Pendiente",800,y+57,16,"700",RED);y+=98;
+panel(28,y,968,86,12,"#fff");ctx.fillStyle=RED;ctx.fillRect(28,y,5,86);ctx.strokeStyle=RED;ctx.lineWidth=2;ctx.beginPath();ctx.arc(72,y+43,25,0,Math.PI*2);ctx.stroke();iconDoc(72,y+43);txt(title,116,y+37,27,"800",INK);txt("N° "+(o.no||""),116,y+67,20,"700",RED);line(605,y+18,605,y+68,1,LINE);txt("Fecha",630,y+31,13,"700",MUTED);txt(fmt(o.created||new Date()).split(",")[0],630,y+57,17,"600",INK);line(775,y+18,775,y+68,1,LINE);txt("Estado",800,y+31,13,"700",MUTED);txt(o.status||"Pendiente",800,y+57,16,"700",RED);y+=98;
 panel(28,y,968,154,12);iconUser(76,y+42);txt("DATOS DEL CLIENTE",118,y+37,20,"800",INK);line(512,y+18,512,y+136,1,RED);iconCar(575,y+45);txt("DATOS DEL VEHÍCULO",622,y+37,20,"800",INK);
 const clientRows=[["Nombre:",o.client?.name||"—"],["Teléfono:",o.client?.phone||"—"],["Email:",o.client?.email||"—"],["RUT:",o.client?.rut||"—"]];clientRows.forEach((r,i)=>{txt(r[0],118,y+70+i*25,14,"700",INK);txt(r[1],207,y+70+i*25,14,"500",MUTED)});
 const vehicleRows=[["Patente:",o.plate||"—"],["Marca:",o.vehicle?.make||"—"],["Modelo:",o.vehicle?.model||"—"],["Año:",o.vehicle?.year||"—"]];vehicleRows.forEach((r,i)=>{txt(r[0],622,y+70+i*25,14,"700",INK);txt(r[1],705,y+70+i*25,14,"500",MUTED)});txt("Kilometraje:",820,y+145,14,"700",INK);txt((o.vehicle?.km||"—")+" km",910,y+145,14,"500",MUTED);y+=166;
